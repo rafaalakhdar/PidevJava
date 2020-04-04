@@ -7,37 +7,97 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class User implements Serializable {
 
-    private final SimpleIntegerProperty id;
-    private final SimpleStringProperty username;
-    private final SimpleStringProperty email;
-    private final SimpleStringProperty password;
-    private final SimpleStringProperty gender;
-    private final SimpleStringProperty country;
-    private final SimpleStringProperty status;
+    private int id;
+    private String username;
+    private String email;
+    private String password;
+    private String gender;
+    private String country;
+    private String status;
 
- 
-    public User(Integer id, String username, String email, String password, String gender, String country, String status) {
-        super();
-        
-        this.id = new SimpleIntegerProperty(id);
-        this.username = new SimpleStringProperty(username);
-        this.email = new SimpleStringProperty(email);
-        this.password = new SimpleStringProperty(password);
-        this.gender = new SimpleStringProperty(gender);
-        this.country = new SimpleStringProperty(country);
-        this.status = new SimpleStringProperty(status);
-        
-        
+    public User(int id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", gender=" + gender + ", country=" + country + ", status=" + status + '}';
+    public User(int id, String email) {
+        this.id = id;
+        this.email = email;
+    }
+
+    public User() {
+    }
+
+    public User(int id, String username, String email, String password, String gender, String country, String status) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.gender = gender;
+        this.country = country;
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
         return hash;
     }
 
@@ -53,7 +113,7 @@ public class User implements Serializable {
             return false;
         }
         final User other = (User) obj;
-        if (!Objects.equals(this.id, other.id)) {
+        if (this.id != other.id) {
             return false;
         }
         if (!Objects.equals(this.username, other.username)) {
@@ -77,34 +137,13 @@ public class User implements Serializable {
         return true;
     }
 
-    public Integer getId() {
-        return id.get();
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", gender=" + gender + ", country=" + country + ", status=" + status + '}';
     }
 
-    public  String getUsername() {
-        return username.get();
-    }
-
-    public  String getEmail() {
-        return email.get();
-    }
-
-    public  String getPassword() {
-        return password.get();
-    }
-
-    public  String getGender() {
-        return gender.get();
-    }
-
-    public  String getCountry() {
-        return country.get();
-    }
-
-    public String getStatus() {
-        return status.get();
-    }
-
+ 
+  
 
     
 }

@@ -22,9 +22,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import utilitez.MyConnection;
 
 import entities.User;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.SelectionModel;
 
 /**
@@ -55,6 +57,12 @@ public class TableController implements Initializable {
 
     PreparedStatement pst = null;
     ResultSet rs = null;
+        Connection cnx2;
+
+    public TableController(){
+      cnx2 = MyConnection.getInstance().getCnx();
+
+}
 
     public ObservableList<User> list = FXCollections.observableArrayList();
 
@@ -63,7 +71,7 @@ public class TableController implements Initializable {
     public void listeTalent() {
 
         try {
-            Connection cnx2 = MyConnection.getInstance().getCnx();
+           
 
             String requete = "SELECT * FROM user";
             PreparedStatement stat = cnx2.prepareStatement(requete);
@@ -72,33 +80,40 @@ public class TableController implements Initializable {
                 list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
 
             }
-            //cnx2.close();
-            //pst.close();
+     
 
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());
         }
-        id.setCellValueFactory(new PropertyValueFactory<User, Integer>("id"));
-        nom.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
-        email.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
-        password.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
-        sexe.setCellValueFactory(new PropertyValueFactory<User, String>("gender"));
-        pays.setCellValueFactory(new PropertyValueFactory<User, String>("country"));
-        status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nom.setCellValueFactory(new PropertyValueFactory<>("username"));
+        email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        password.setCellValueFactory(new PropertyValueFactory<>("password"));
+        sexe.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        pays.setCellValueFactory(new PropertyValueFactory<>("country"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
         table.setItems(list);
 
     }
 
     public void deleteuser(ActionEvent event) throws Exception {
         try {
-            Connection cnx2 = MyConnection.getInstance().getCnx();
+          
             User user = (User) table.getSelectionModel().getSelectedItem();
 
             String requete = "delete FROM user where id=?";
             pst = cnx2.prepareStatement(requete);
             pst.setInt(1, user.getId());
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure to delete?");
+                Optional <ButtonType> action = alert.showAndWait();
+                
+                if(action.get() == ButtonType.OK){
             pst.executeUpdate();
+                }
             pst.close();
 
         } catch (SQLException e1) {
@@ -117,7 +132,7 @@ public class TableController implements Initializable {
     public void updateuser(ActionEvent event) {
 
         try {
-            Connection cnx2 = MyConnection.getInstance().getCnx();
+           
 
             String requete = "SELECT * FROM user";
             PreparedStatement stat = cnx2.prepareStatement(requete);
@@ -126,18 +141,18 @@ public class TableController implements Initializable {
                 list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
 
             }
-            cnx2.close();
+            
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());
         }
-        id.setCellValueFactory(new PropertyValueFactory<User, Integer>("id"));
-        nom.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
-        email.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
-        password.setCellValueFactory(new PropertyValueFactory<User, String>("password"));
-        sexe.setCellValueFactory(new PropertyValueFactory<User, String>("gender"));
-        pays.setCellValueFactory(new PropertyValueFactory<User, String>("country"));
-        status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nom.setCellValueFactory(new PropertyValueFactory<>("username"));
+        email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        password.setCellValueFactory(new PropertyValueFactory<>("password"));
+        sexe.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        pays.setCellValueFactory(new PropertyValueFactory<>("country"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
         table.setItems(list);
 
     }

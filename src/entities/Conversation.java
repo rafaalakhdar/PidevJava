@@ -5,56 +5,50 @@
  */
 package entities;
 
+import java.io.Serializable;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.datatype.XMLGregorianCalendar;
+
 
 /**
  *
  * @author Rafaa
  */
-public class Conversation {
+public class Conversation implements Serializable {
     
-    private int id;
-    private String nom;
-    private XMLGregorianCalendar dateCreation;
+      private final SimpleIntegerProperty id;
+    private final SimpleStringProperty nom;
+    private final SimpleStringProperty dateCreation;
 
-    public Conversation() {
-    }
+  
 
-    public Conversation(int id, String nom) {
-        this.id = id;
-        this.nom = nom;
-    }
+    public Conversation(int id, String nom, String dateCreation) {
+        super();
+         this.id = new SimpleIntegerProperty(id);
+        this.nom = new SimpleStringProperty(nom);
 
-    public Conversation(int id, String nom, XMLGregorianCalendar dateCreation) {
-        this.id = id;
-        this.nom = nom;
-        this.dateCreation = dateCreation;
+        this.dateCreation = new SimpleStringProperty(dateCreation) ;
     }
 
     public int getId() {
-        return id;
+        return id.get();
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+   
 
     public String getNom() {
-        return nom;
+        return nom.get();
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public String getDateCreation() {
+        return dateCreation.get();
     }
 
-    public XMLGregorianCalendar getDateCreation() {
-        return dateCreation;
-    }
-
-    public void setDateCreation(XMLGregorianCalendar dateCreation) {
-        this.dateCreation = dateCreation;
-    }
+  
 
     @Override
     public String toString() {

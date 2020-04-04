@@ -98,7 +98,7 @@ public class SignupScenceController implements Initializable {
 
                 String requete = "insert into user (nom,email,password,sexe,pays) values('" + username
                         + "','" + email + "','" + SHA.encrypt(password) + "','"
-                        + gender + "','" + country + "')";;
+                        + gender + "','" + country + "')";
                 Statement st = cnx2.createStatement();
                 st.executeUpdate(requete);
                 clearFields();

@@ -136,5 +136,20 @@ public class ConversationController implements Initializable {
             System.out.println("file is not valid");
         }
     }
+    public void gotomail (ActionEvent event) {
+        try {
+
+            Stage stage = (Stage) menubar.getScene().getWindow();
+            Parent parent = FXMLLoader.load(getClass().getResource("SendEmailScene.fxml"));
+            Scene scene = new Scene(parent);
+            stage.setTitle("Nouvelle reclamation");
+
+            stage.setScene(scene);
+            stage.show();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 }

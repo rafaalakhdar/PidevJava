@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="602.0" stylesheets="@grey_theme.css" prefWidth="898.0"  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.ConversationController">
+<AnchorPane id="AnchorPane" prefHeight="602.0" prefWidth="898.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.ConversationController">
    <children>
       <BorderPane layoutX="-6.0" layoutY="45.0" prefHeight="557.0" prefWidth="898.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
          <top>
@@ -102,7 +102,6 @@
                   <Menu mnemonicParsing="false" text="Conversations">
                      <items>
                         <MenuItem mnemonicParsing="false" text="New" />
-                        <MenuItem mnemonicParsing="false" text="List" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="users">
@@ -117,25 +116,16 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
                <items>
-                  <Menu mnemonicParsing="false" text="Conversations">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#editconversationAction" text="Nom conversation" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <Menu mnemonicParsing="false" text="Messages">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="Delete" />
-                           </items>
-                        </Menu>
-                        <MenuItem mnemonicParsing="false" onAction="#editinfouserAction" text="Info personnel" />
-                     </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#editconversationAction" text="Nom conversation" />
+                  <MenuItem mnemonicParsing="false" text="Effacer Conversation" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Effacer message" />
+                  <MenuItem mnemonicParsing="false" onAction="#editinfouserAction" text="Information profil" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Reclamation">
                <items>
-                  <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" text="repense" />
+                  <MenuItem mnemonicParsing="false" onAction="#gotomail" text="New" />
                </items>
             </Menu>
          </menus>
