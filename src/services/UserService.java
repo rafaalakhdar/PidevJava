@@ -33,14 +33,14 @@ public class UserService {
     {
         try {
             Statement st =cnx2.createStatement();
-            String req = "insert into user (nom,email,password,sexe,pays) values("+user.getUsername()+",'"+user.getEmail()+"','"+user.getPassword()+"','"+user.getGender()+"','"+user.getCountry()+"')";
+            String req = "insert into user (nom,email,password,sexe,pays) values("+user.getNom()+",'"+user.getEmail()+"','"+user.getPassword()+"','"+user.getSexe()+"','"+user.getPays()+"')";
             st.executeUpdate(req);
             PreparedStatement pt = cnx2.prepareStatement("select id from user ORDER BY id DESC LIMIT 0, 1");
             ResultSet rs = pt.executeQuery();
             
             
             while (rs.next()) {            
-                user.setStatus("Online");
+                user.setStatus("Offline");
             }
             
         } catch (SQLException ex) {
@@ -53,14 +53,17 @@ public class UserService {
         try {
            
             String stat = ("select * from user where user.email='"+mail+"' and user.password='"+mdp+"' ");
+           
             PreparedStatement pt=cnx2.prepareStatement(stat);
-            ResultSet rs = pt.executeQuery();            
+            ResultSet rs = pt.executeQuery();  
+            
             if (rs.next()) {
+                editstatusOn(mail);
             test = true;
             }
             else 
             {
-                System.out.println("verifier vos donnees!!!");
+                System.out.println("verifier login ou mdp");
                 test=false;
             }
         } catch (SQLException ex) {
@@ -108,6 +111,34 @@ public class UserService {
         
     }
        
+        public void editstatusOff (String mail)
+      {
+           String stat="Offline";
+            try {
+            PreparedStatement pt = cnx2.prepareStatement("update user set status = '"+stat+"'  where email='"+mail+"' ");
+        
+                 pt.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       
+              
+      }
+        
+          public void editstatusOn (String mail)
+      {
+           String stat="Online";
+            try {
+            PreparedStatement pt = cnx2.prepareStatement("update user set status = '"+stat+"'  where email='"+mail+"' ");
+        
+                 pt.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       
+              
+      }
+       
         public void editname (String mail,String nom)
       {
            
@@ -122,18 +153,20 @@ public class UserService {
        
               
       }
+        
+        
           public void edituser (User user)
       {
            
             try {
                 PreparedStatement pt = cnx2.prepareStatement("update user set id=?, nom=? , password=?  ,email=? ,sexe=? ,pays=?,status=?  where email=? ");
                  pt.setInt(1,user.getId());
-                pt.setString(2,user.getUsername());
+                pt.setString(2,user.getNom());
                 pt.setString(3,user.getPassword());
                
                 pt.setString(4,user.getEmail());
-                pt.setString(5,user.getGender());
-                pt.setString(6,user.getCountry());
+                pt.setString(5,user.getSexe());
+                pt.setString(6,user.getPays());
                 pt.setString(7,user.getStatus());
                
                 

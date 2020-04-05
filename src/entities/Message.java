@@ -5,119 +5,143 @@
  */
 package entities;
 
-import java.util.Objects;
-import javax.xml.datatype.XMLGregorianCalendar;
-
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Rafaa
  */
-public class Message {
+@Entity
+@Table(name = "message")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m")
+    , @NamedQuery(name = "Message.findByIdM", query = "SELECT m FROM Message m WHERE m.idM = :idM")
+    , @NamedQuery(name = "Message.findByImage", query = "SELECT m FROM Message m WHERE m.image = :image")
+    , @NamedQuery(name = "Message.findByCreatedAt", query = "SELECT m FROM Message m WHERE m.createdAt = :createdAt")})
+public class Message implements Serializable {
 
-    private int id;
-    private String body;
-    private boolean visible;
-    private String file;
-    private XMLGregorianCalendar dateEnvoi;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idM")
+    private Integer idM;
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "message")
+    private String message;
+    @Column(name = "image")
+    private String image;
+    @Column(name = "created_at")
+    @Temporal(TemporalType.DATE)
+    private Date createdAt;
+    @JoinColumn(name = "conversation_id", referencedColumnName = "id")
+    @ManyToOne
+    private Conversation conversationId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
 
     public Message() {
     }
 
-    public Message(int id, String body) {
-        this.id = id;
-        this.body = body;
+    public Message(Integer idM) {
+        this.idM = idM;
     }
 
-    public Message(int id, String body, boolean visible, String file, XMLGregorianCalendar dateEnvoi) {
-        this.id = id;
-        this.body = body;
-        this.visible = visible;
-        this.file = file;
-        this.dateEnvoi = dateEnvoi;
+    public Message(Integer idM, String message) {
+        this.idM = idM;
+        this.message = message;
     }
 
-    public int getId() {
-        return id;
+    public Integer getIdM() {
+        return idM;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdM(Integer idM) {
+        this.idM = idM;
     }
 
-    public String getBody() {
-        return body;
+    public String getMessage() {
+        return message;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public boolean isVisible() {
-        return visible;
+    public String getImage() {
+        return image;
     }
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getFile() {
-        return file;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public XMLGregorianCalendar getDateEnvoi() {
-        return dateEnvoi;
+    public Conversation getConversationId() {
+        return conversationId;
     }
 
-    public void setDateEnvoi(XMLGregorianCalendar dateEnvoi) {
-        this.dateEnvoi = dateEnvoi;
+    public void setConversationId(Conversation conversationId) {
+        this.conversationId = conversationId;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" + "id=" + id + ", body=" + body + ", visible=" + visible + ", file=" + file + ", dateEnvoi=" + dateEnvoi + '}';
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 0;
+        hash += (idM != null ? idM.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Message)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Message other = (Message) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (this.visible != other.visible) {
-            return false;
-        }
-        if (!Objects.equals(this.body, other.body)) {
-            return false;
-        }
-        if (!Objects.equals(this.file, other.file)) {
-            return false;
-        }
-        if (!Objects.equals(this.dateEnvoi, other.dateEnvoi)) {
+        Message other = (Message) object;
+        if ((this.idM == null && other.idM != null) || (this.idM != null && !this.idM.equals(other.idM))) {
             return false;
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "entities.Message[ idM=" + idM + " ]";
+    }
     
 }

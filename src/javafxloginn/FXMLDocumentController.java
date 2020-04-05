@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -58,7 +60,7 @@ public class FXMLDocumentController implements Initializable {
      *
      */
     public void Login(ActionEvent event) throws Exception {
-        if (validateFields()) {
+        if (validateFields() & validateEmaill()) {
                 email = user.getText();
                 pwd = SHA.encrypt(pass.getText());
                 boolean test=us.connect(email, pwd);
@@ -155,6 +157,21 @@ public class FXMLDocumentController implements Initializable {
         }
 
         return true;
+    }
+        private boolean validateEmaill() {
+        Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
+        Matcher m = p.matcher(user.getText());
+        if (m.find() && m.group().equals(user.getText())) {
+            return true;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Erreur Email");
+            alert.setHeaderText(null);
+            alert.setContentText("invalide Email");
+            alert.showAndWait();
+
+            return false;
+        }
     }
 
 }

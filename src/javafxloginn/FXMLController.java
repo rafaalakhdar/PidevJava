@@ -59,7 +59,7 @@ public class FXMLController implements Initializable {
     @FXML
     private TableColumn<Conversation, String> nom;
     @FXML
-    private TableColumn<Conversation, String> datecreation;
+    private TableColumn<Conversation, Date> datecreation;
     PreparedStatement pst = null;
     ResultSet rs = null;
 
@@ -76,7 +76,7 @@ public class FXMLController implements Initializable {
             PreparedStatement stat = cnx2.prepareStatement(requete);
             ResultSet rs = stat.executeQuery();
             while (rs.next()) {
-                list.add(new Conversation(rs.getInt(1), rs.getString(2), rs.getString(3)));
+                list.add(new Conversation(rs.getInt(1), rs.getString(2), rs.getDate(3)));
 
             }
             //cnx2.close();
@@ -86,9 +86,9 @@ public class FXMLController implements Initializable {
 
             System.out.println(ex.getMessage());
         }
-        id.setCellValueFactory(new PropertyValueFactory<Conversation, Integer>("id"));
-        nom.setCellValueFactory(new PropertyValueFactory<Conversation, String>("nom"));
-        datecreation.setCellValueFactory(new PropertyValueFactory<Conversation, String>("dateCreation"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        datecreation.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
 
         table.setItems(list);
 

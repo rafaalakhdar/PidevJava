@@ -25,6 +25,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import services.UserService;
 
 /**
  * FXML Controller class
@@ -64,11 +65,7 @@ public class MenubarController implements Initializable {
         
     }
 
-    public void logout(ActionEvent event) {
-        Platform.exit();
-        System.exit(0);
 
-    }
 
     public void chatpageAction(ActionEvent event) {
         try {
@@ -134,6 +131,14 @@ public class MenubarController implements Initializable {
 
     public void btn5(ActionEvent event) {
         engine.reload();
+    }
+    
+        public void logout(ActionEvent event) {
+        UserService us =new UserService();
+        us.editstatusOff(mailfield.getText());
+        Platform.exit();
+        System.exit(0);
+
     }
 
 }

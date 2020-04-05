@@ -82,7 +82,7 @@ public class SignupScenceController implements Initializable {
     private Button btnSignup;
 
     @FXML
-    public void ajouteruser() {
+    public void ajouteruser(ActionEvent event) {
         
 
         if (validateName() & validateEmaill() & validatePassword() & validateFields()) {
@@ -92,13 +92,13 @@ public class SignupScenceController implements Initializable {
             String password = txtPassword.getText();
             String gender = comboboxGender.getValue();
             String country = comboboxCountry.getValue();
-
+            String statu = "Offline";
             try {
                 Connection cnx2 = MyConnection.getInstance().getCnx();
-
-                String requete = "insert into user (nom,email,password,sexe,pays) values('" + username
+                
+                String requete = "insert into user (nom,email,password,sexe,pays,status) values('" + username
                         + "','" + email + "','" + SHA.encrypt(password) + "','"
-                        + gender + "','" + country + "')";
+                        + gender + "','" + country +"','" + statu + "')";
                 Statement st = cnx2.createStatement();
                 st.executeUpdate(requete);
                 clearFields();
@@ -109,6 +109,23 @@ public class SignupScenceController implements Initializable {
                 alertSuccess.setHeaderText("Signup Successfully");
                 alertSuccess.setContentText("Welcome to Our Tunisian Got Talent\nplease back and login");
                 alertSuccess.showAndWait();
+                
+                 try {
+
+            Stage stage = new Stage();
+            Parent parent = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+            Scene scene = new Scene(parent);
+                                      stage.setTitle("Tunisain Got Talent");
+
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+                
+                
+                
 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());

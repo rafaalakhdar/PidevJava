@@ -87,11 +87,11 @@ public class TableController implements Initializable {
             System.out.println(ex.getMessage());
         }
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nom.setCellValueFactory(new PropertyValueFactory<>("username"));
+        nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         password.setCellValueFactory(new PropertyValueFactory<>("password"));
-        sexe.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        pays.setCellValueFactory(new PropertyValueFactory<>("country"));
+        sexe.setCellValueFactory(new PropertyValueFactory<>("sexe"));
+        pays.setCellValueFactory(new PropertyValueFactory<>("pays"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         table.setItems(list);
 
@@ -147,11 +147,11 @@ public class TableController implements Initializable {
             System.out.println(ex.getMessage());
         }
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nom.setCellValueFactory(new PropertyValueFactory<>("username"));
+        nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         password.setCellValueFactory(new PropertyValueFactory<>("password"));
-        sexe.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        pays.setCellValueFactory(new PropertyValueFactory<>("country"));
+        sexe.setCellValueFactory(new PropertyValueFactory<>("sexe"));
+        pays.setCellValueFactory(new PropertyValueFactory<>("pays"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         table.setItems(list);
 
