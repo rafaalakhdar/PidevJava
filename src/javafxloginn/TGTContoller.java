@@ -50,8 +50,8 @@ public class TGTContoller implements Initializable {
         // mylist.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         TreeItem<String> root = new TreeItem<>("Gestion Tunisian Got Talent", new ImageView(icon2));
-        TreeItem<String> conv = new TreeItem<>("Conversation", new ImageView(icon));
-        TreeItem<String> mail = new TreeItem<>("Send Mail", new ImageView(icon));
+        //TreeItem<String> conv = new TreeItem<>("Conversation", new ImageView(icon));
+        TreeItem<String> mail = new TreeItem<>("Reclamer une conversation", new ImageView(icon));
 
         TreeItem<String> shop = new TreeItem<>("Shop", new ImageView(icon));
 
@@ -60,7 +60,7 @@ public class TGTContoller implements Initializable {
         TreeItem<String> even = new TreeItem<>("Evenement", new ImageView(icon));
         TreeItem<String> partic = new TreeItem<>("Partcipation", new ImageView(icon));
         TreeItem<String> aud = new TreeItem<>("Audition", new ImageView(icon));
-        root.getChildren().addAll(conv, mail, shop, recl, pub, even, partic, aud);
+        root.getChildren().addAll( mail, shop, recl, pub, even, partic, aud);
 
         mytree.setRoot(root);
 
@@ -78,14 +78,14 @@ public class TGTContoller implements Initializable {
         if (item.getValue().equals("Shop")) {
 
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("SendEmailScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
             stage.setTitle("Gestion du Shop");
             Scene scene = new Scene(root, 1280, 720);
 
             stage.setScene(scene);
             stage.show();
 
-        } else if (item.getValue().equals("Conversation")) {
+        } else if (item.getValue().equals("Publications")) {
 
             //System.out.println("nono");
             Stage stage = new Stage();
@@ -100,7 +100,7 @@ public class TGTContoller implements Initializable {
 
             //System.out.println("nono");
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("SendEmailScene.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("SFXML.fxml"));
             stage.setTitle("Gestion de participation");
             Scene scene = new Scene(root, 1280, 720);
 
@@ -108,7 +108,7 @@ public class TGTContoller implements Initializable {
             stage.show();
 
             //((Node) (mouse.getSource())).getScene().getWindow().hide();
-        } else if (item.getValue().equals("Send Mail")) {
+        } else if (item.getValue().equals("Reclamer une conversation")) {
 
             //System.out.println("nono");
             Stage stage = new Stage();

@@ -21,7 +21,7 @@
       </TableView>
       <HBox layoutX="94.0" layoutY="344.0" prefHeight="78.0" prefWidth="763.0" AnchorPane.leftAnchor="94.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#updateuser" text="Update User" translateX="260.0" translateY="50.0" />
+            <Button mnemonicParsing="false" onAction="#updateuser" text="Refrech" translateX="260.0" translateY="50.0" />
             <Button fx:id="efface" mnemonicParsing="false" onAction="#deleteuser" text="Effacer" translateX="270.0" translateY="50.0" />
          </children>
       </HBox>

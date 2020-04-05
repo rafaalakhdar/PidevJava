@@ -25,12 +25,12 @@
         </ImageView>
             </graphic>
         </Button>
-        <Label text="$labelText" fx:id="status" layoutX="340.0" layoutY="297.0" prefHeight="21.0" prefWidth="278.0" textAlignment="CENTER" textFill="#e8401f">
+        <Label fx:id="status" layoutX="340.0" layoutY="297.0" prefHeight="21.0" prefWidth="278.0" textAlignment="CENTER" textFill="#e8401f">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <TextField fx:id="user" layoutX="197.0" layoutY="149.0" promptText="User">
+        <TextField fx:id="user" layoutX="197.0" layoutY="149.0" promptText="Email">
             <font>
                 <Font size="18.0" />
             </font>

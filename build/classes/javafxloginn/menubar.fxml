@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -11,11 +12,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@grey_theme.css" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.MenubarController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.MenubarController">
     <top>
         <MenuBar fx:id="myMenubar" prefHeight="34.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <menus>
@@ -108,11 +107,8 @@
                         </ImageView>
                     </graphic>
                 </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CopyRight 2020" textAlignment="CENTER" wrappingWidth="709.615234375">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
+            <Button fx:id="updateinfo" mnemonicParsing="false" onAction="#updateinfoAction" text="Update Profil" translateX="350.0" />
+            <Label fx:id="mailfield" prefHeight="29.0" prefWidth="250.0" translateX="380.0" />
             </children>
             <effect>
                 <Blend />

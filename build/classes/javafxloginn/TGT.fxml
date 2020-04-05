@@ -51,11 +51,20 @@
                         </AnchorPane>
                     </content>
                 </Tab>
+            <Tab text="Conversations">
+              <content>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <fx:include fx:id="includeID2" source="FXML.fxml" />
+                            </children>
+                        </AnchorPane>
+              </content>
+            </Tab>
                 <Tab text="Messages">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="642.0" prefWidth="615.0">
                             <children>
-                                <fx:include fx:id="includeID2" source="EditInfoUser.fxml" />
+                                <fx:include fx:id="includeID3" source="FXML.fxml" />
                             </children>
                         </AnchorPane>
                     </content>

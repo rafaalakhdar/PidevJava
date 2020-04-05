@@ -30,6 +30,7 @@ import javafx.scene.control.Label;
 
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import services.UserService;
 import utilitez.MyConnection;
 import utilitez.SHA;
 
@@ -47,34 +48,31 @@ public class FXMLDocumentController implements Initializable {
     private TextField pass;
     @FXML
     private Hyperlink linkCreateAccount;
-    PreparedStatement pst = null;
+   // PreparedStatement pst = null;
     ResultSet rs = null;
     private final String adminpass = "0c02cad8b24ed02448abbbd71ee51cb0166e641b3e557353829fd517803a8f5c2f8d6a8ce15aa280ec1b2b1f8f915a607ab0bdadfab3116ee580a50a4ec30850";
-    User utilisateur = null;
+    UserService us = new UserService();
+    String email,pwd;
 
     /**
      *
      */
     public void Login(ActionEvent event) throws Exception {
         if (validateFields()) {
+                email = user.getText();
+                pwd = SHA.encrypt(pass.getText());
+                boolean test=us.connect(email, pwd);
             try {
-                Connection cnx2 = MyConnection.getInstance().getCnx();
-                String p = pass.getText();
+               
+                
 
-                String query = "select * from user where nom=? and password=?";
-
-                pst = cnx2.prepareStatement(query);
-                pst.setString(1, user.getText());
-                pst.setString(2, SHA.encrypt(p));
-                rs = pst.executeQuery();
-
-                if (rs.next()) {
-                    if (SHA.encrypt(p).equals(adminpass)) {
+                if (test) {
+                    if (pwd.equals(adminpass)) {
                         status.setText("login success");
                         Stage stage = new Stage();
                         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TGT.fxml"));
                         fxmlLoader.getNamespace().put("labelText", user.getText());
-                        //System.out.println("labelText"+"--" + "External Text");
+                       
                         final Parent root = fxmlLoader.load();
                         stage.setTitle("ADMIN Tunisain Got Talent");
                         Scene scene = new Scene(root, 1250, 550);
@@ -88,9 +86,14 @@ public class FXMLDocumentController implements Initializable {
                     // User utilasateur = new User();
 
                     Stage stage = new Stage();
-                    Parent root = FXMLLoader.load(getClass().getResource("menubar.fxml"));
+                    FXMLLoader loader  =new FXMLLoader(getClass().getResource("menubar.fxml"));
+                    Parent root = loader.load();
                     stage.setTitle("Tunisain Got Talent");
                     Scene scene = new Scene(root, 1280, 720);
+                    
+                    MenubarController mbc = loader.getController();
+                    mbc.setMail(email);
+                
 
                     //stage.initOwner(stage);
                     stage.setScene(scene);
@@ -108,12 +111,10 @@ public class FXMLDocumentController implements Initializable {
                 }
                 user.clear();
                 pass.clear();
-                pst.close();
-                rs.close();
-            } catch (IOException | SQLException e1) {
-                status.setText("SQL Error");
-                System.err.println(e1);
-            }
+            
+            }  catch (IOException ex) {
+                System.out.println(ex.getMessage());
+                }
 
         }
     }

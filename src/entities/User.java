@@ -2,8 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+
 
 public class User implements Serializable {
 
@@ -38,6 +37,15 @@ public class User implements Serializable {
         this.country = country;
         this.status = status;
     }
+
+    public User(String username, String email, String password, String gender, String country) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.gender = gender;
+        this.country = country;
+    }
+    
 
     public int getId() {
         return id;

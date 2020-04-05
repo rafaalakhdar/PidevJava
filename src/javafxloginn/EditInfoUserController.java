@@ -5,8 +5,11 @@
  */
 package javafxloginn;
 
+import entities.User;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,9 +23,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import services.UserService;
 
 /**
  * FXML Controller class
@@ -30,6 +35,9 @@ import javafx.stage.Stage;
  * @author Rafaa
  */
 public class EditInfoUserController implements Initializable {
+    
+    @FXML
+    private Label lblmail;
 
     @FXML
     private TextField txtUserName;
@@ -44,17 +52,24 @@ public class EditInfoUserController implements Initializable {
     private Button back;
     @FXML
     private Button update;
-
+   
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+       // txtEmail.setText(lblmail.getText());
     }
     
     public void updateuser(){
+         
     
+    }
+    
+      void send(String email) {
+        lblmail.setText(email);
+        
     }
 
     /**
@@ -151,4 +166,6 @@ public class EditInfoUserController implements Initializable {
         return true;
     }
 
+     
+    
 }
