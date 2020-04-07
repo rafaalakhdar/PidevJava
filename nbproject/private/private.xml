@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/netbeans/JavaFXloginn/src/javafxloginn/TableController.java</file>
-            <file>file:/D:/netbeans/JavaFXloginn/src/entities/User.java</file>
-            <file>file:/D:/netbeans/JavaFXloginn/src/javafxloginn/FXMLController.java</file>
+            <file>file:/D:/netbeans/JavaFXloginn/src/javafxloginn/SignupScenceController.java</file>
+            <file>file:/D:/netbeans/JavaFXloginn/src/javafxloginn/JavaFXloginn.java</file>
+            <file>file:/D:/netbeans/JavaFXloginn/src/javafxloginn/FXMLDocumentController.java</file>
+            <file>file:/D:/netbeans/JavaFXloginn/src/javafxloginn/SignupScence.fxml</file>
         </group>
     </open-files>
 </project-private>

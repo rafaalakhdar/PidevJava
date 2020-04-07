@@ -68,20 +68,25 @@ public class MenubarController implements Initializable {
 
 
     public void chatpageAction(ActionEvent event) {
+        String p = mailfield.getText();
         try {
 
             //Stage stage = new Stage();
             Stage stage = (Stage) myMenubar.getScene().getWindow();
-            Parent parent = FXMLLoader.load(getClass().getResource("conversation.fxml"));
-            Scene scene = new Scene(parent);
-            stage.setTitle("Chat Box");
+           FXMLLoader loader = new FXMLLoader(getClass().getResource("conversation.fxml"));
+           Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setTitle("Chat Box " + p);
+            ConversationController cc =loader.getController();
+                    cc.setdata(p);
+            
 
             stage.setScene(scene);
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+           System.out.println(ex.getMessage());
         }
     }
 
@@ -97,7 +102,7 @@ public class MenubarController implements Initializable {
             stage.setTitle("Update Profil user " + profil);
             Scene scene = new Scene(root);
 
-            EditInfoUserController iu = new EditInfoUserController();
+            EditInfoUserController iu = loader.getController();
             iu.send(profil);
 
             stage.setScene(scene);

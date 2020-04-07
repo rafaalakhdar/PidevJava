@@ -6,18 +6,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.FXMLController">
+<AnchorPane id="AnchorPane" prefHeight="507.0" prefWidth="969.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.FXMLController">
    <children>
-      <Button fx:id="btneface" layoutX="227.0" layoutY="339.0" mnemonicParsing="false" onAction="#deleteconv" text="Effacer" />
-      <Button fx:id="btnupdate" layoutX="313.0" layoutY="339.0" mnemonicParsing="false" onAction="#listeConversation" text="Update" />
-      <TableView fx:id="table" layoutX="-2.0" layoutY="-1.0" prefHeight="310.0" prefWidth="606.0">
+      <Button fx:id="btneface" layoutX="403.0" layoutY="421.0" mnemonicParsing="false" onAction="#deleteconv" text="Effacer" />
+      <Button fx:id="btnupdate" layoutX="518.0" layoutY="421.0" mnemonicParsing="false" onAction="#listeConversation" text="Update" />
+      <TableView fx:id="table" layoutX="-2.0" layoutY="-1.0" prefHeight="397.0" prefWidth="969.0">
         <columns>
-          <TableColumn fx:id="id" prefWidth="206.0" text="id" />
-          <TableColumn fx:id="nom" prefWidth="221.0" text="Nom" />
-            <TableColumn fx:id="datecreation" prefWidth="178.0" text="Date de creation" />
+          <TableColumn fx:id="id" prefWidth="255.0" text="id" />
+          <TableColumn fx:id="nom" prefWidth="417.0" text="Nom" />
+            <TableColumn fx:id="datecreation" prefWidth="255.0" text="Date de creation" />
         </columns>
       </TableView>
-      <Line endX="100.0" layoutX="115.0" layoutY="355.0" startX="-100.0" />
-      <Line endX="100.0" layoutX="489.0" layoutY="355.0" startX="-100.0" />
+      <Line endX="140.0" layoutX="214.0" layoutY="437.0" startX="-139.0" />
+      <Line endX="100.0" layoutX="766.0" layoutY="436.0" startX="-127.0" />
    </children>
 </AnchorPane>

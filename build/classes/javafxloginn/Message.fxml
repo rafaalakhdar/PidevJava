@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.MessageController">
-    
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="1046.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.MessageController">
+   <children>
+      <TableView fx:id="table" layoutY="-2.0" prefHeight="500.0" prefWidth="1046.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="87.0" text="ID" />
+          <TableColumn fx:id="message" minWidth="0.0" prefWidth="254.0" text="Message" />
+            <TableColumn fx:id="image" minWidth="0.0" prefWidth="231.0" text="Image" />
+            <TableColumn fx:id="date" minWidth="0.0" prefWidth="146.0" text="Date" />
+            <TableColumn fx:id="idconv" minWidth="0.0" prefWidth="137.0" text="Conversation" />
+            <TableColumn fx:id="iduser" minWidth="0.0" prefWidth="145.0" text="user" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>

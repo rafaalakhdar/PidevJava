@@ -71,6 +71,41 @@ public class Message implements Serializable {
         this.message = message;
     }
 
+    public Message(Integer idM, String message, String image, Date createdAt, Conversation conversationId, User userId) {
+        this.idM = idM;
+        this.message = message;
+        this.image = image;
+        this.createdAt = createdAt;
+        this.conversationId = conversationId;
+        this.userId = userId;
+    }
+
+    public Message(String message, String image, Date createdAt, Conversation conversationId, User userId) {
+        this.message = message;
+        this.image = image;
+        this.createdAt = createdAt;
+        this.conversationId = conversationId;
+        this.userId = userId;
+    }
+    
+
+    public Message(Integer idM, String message, String image, Date createdAt) {
+        this.idM = idM;
+        this.message = message;
+        this.image = image;
+        this.createdAt = createdAt;
+    }
+
+    public Message(Integer idM, String message, String image, Date createdAt, User userId) {
+        this.idM = idM;
+        this.message = message;
+        this.image = image;
+        this.createdAt = createdAt;
+        this.userId = userId;
+    }
+    
+    
+
     public Integer getIdM() {
         return idM;
     }

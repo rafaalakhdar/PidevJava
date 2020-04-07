@@ -59,7 +59,7 @@ public class EditInfoUserController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-       // txtEmail.setText(lblmail.getText());
+       
     }
     
     public void updateuser(){
@@ -69,7 +69,8 @@ public class EditInfoUserController implements Initializable {
     
       void send(String email) {
         lblmail.setText(email);
-        
+        txtEmail.setText(lblmail.getText());
+        txtEmail.setEditable(false);
     }
 
     /**

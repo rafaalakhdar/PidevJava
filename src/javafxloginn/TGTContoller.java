@@ -100,7 +100,7 @@ public class TGTContoller implements Initializable {
 
             //System.out.println("nono");
             Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("SFXML.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
             stage.setTitle("Gestion de participation");
             Scene scene = new Scene(root, 1280, 720);
 

@@ -22,7 +22,7 @@
    <Line endX="240.0" fill="#e8e8e8" layoutX="95.0" layoutY="110.0" opacity="0.15" startX="-95.0" stroke="#dddddd" />
    <TextArea fx:id="txtAreaEmail" layoutX="21.0" layoutY="175.0" prefHeight="196.0" prefWidth="293.0" promptText="Compose email ..." />
    <Label fx:id="txtFrom" layoutX="65.0" layoutY="39.0" prefHeight="17.0" prefWidth="227.0" text="rafaa.lakhdhar@esprit.tn" />
-   <Label fx:id="txtTo" layoutX="65.0" layoutY="80.0" prefHeight="17.0" prefWidth="227.0" text="rafaa.lkh@gmail.com" />
+   <Label fx:id="txtTo" layoutX="65.0" layoutY="80.0" prefHeight="17.0" prefWidth="227.0" />
    <TextField fx:id="txtFieldSubject" layoutX="21.0" layoutY="129.0" prefHeight="27.0" prefWidth="227.0" promptText="Subject" />
    <Button fx:id="btnSend" layoutX="259.0" layoutY="129.0" mnemonicParsing="false" text="Send" />
 </AnchorPane>

@@ -48,18 +48,18 @@
     -fx-text-fill: secondary-text-color;
     -fx-text-alignment: left;
 }
-#paneLogin{
+/*#paneLogin{
     -fx-background-image: url("/img/b3.jpg");
     -fx-background-repeat: stretch;   
     -fx-background-size: 900 506;
     -fx-background-position: center center;
     
-    opacity: 0.3;
+    opacity: 0.3;}*/
   
     
      
     
-}
+
 
 
 .table-view .column-header-background {

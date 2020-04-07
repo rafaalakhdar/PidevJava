@@ -7,6 +7,7 @@ package javafxloginn;
 
 import entities.User;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,8 +30,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import services.UserService;
 import utilitez.MyConnection;
@@ -50,16 +56,27 @@ public class FXMLDocumentController implements Initializable {
     private TextField pass;
     @FXML
     private Hyperlink linkCreateAccount;
+    @FXML
+	private Region region;
+    @FXML
+	private MediaView mediaView;
+    @FXML
+	private ProgressIndicator indicator;
+    @FXML
+	private Label connectingLabel;
    // PreparedStatement pst = null;
     ResultSet rs = null;
     private final String adminpass = "0c02cad8b24ed02448abbbd71ee51cb0166e641b3e557353829fd517803a8f5c2f8d6a8ce15aa280ec1b2b1f8f915a607ab0bdadfab3116ee580a50a4ec30850";
     UserService us = new UserService();
     String email,pwd;
+    	public static MediaPlayer mediaPlayer;
+
 
     /**
      *
      */
     public void Login(ActionEvent event) throws Exception {
+        indicator.setVisible(true);
         if (validateFields() & validateEmaill()) {
                 email = user.getText();
                 pwd = SHA.encrypt(pass.getText());
@@ -69,6 +86,7 @@ public class FXMLDocumentController implements Initializable {
                 
 
                 if (test) {
+                    indicator.setVisible(false);
                     if (pwd.equals(adminpass)) {
                         status.setText("login success");
                         Stage stage = new Stage();
@@ -77,7 +95,7 @@ public class FXMLDocumentController implements Initializable {
                        
                         final Parent root = fxmlLoader.load();
                         stage.setTitle("ADMIN Tunisain Got Talent");
-                        Scene scene = new Scene(root, 1250, 550);
+                        Scene scene = new Scene(root, 1260, 550);
                         //stage.setFullScreen(true);
                         stage.setScene(scene);
                         stage.show();
@@ -95,6 +113,7 @@ public class FXMLDocumentController implements Initializable {
                     
                     MenubarController mbc = loader.getController();
                     mbc.setMail(email);
+                    
                 
 
                     //stage.initOwner(stage);
@@ -103,12 +122,15 @@ public class FXMLDocumentController implements Initializable {
                     ((Node) (event.getSource())).getScene().getWindow().hide();
 
                 } else {
+                    indicator.setVisible(true);
                     status.setText("login failed");
+                    
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("login failed");
                     alert.setHeaderText(null);
                     alert.setContentText("login ou mot de pass invalide");
                     alert.showAndWait();
+                    indicator.setVisible(false);
 
                 }
                 user.clear();
@@ -123,6 +145,29 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Media media = null;
+		try {
+			media = new Media(getClass().getResource("/videos/d.mp4").toURI().toString());
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		} 
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		mediaView.setMediaPlayer(mediaPlayer);
+	
+
+		
+
+		mediaPlayer.setOnError(() -> System.out.println("Media error:" + mediaPlayer.getError().toString()));
+
+		// Region
+		region.setStyle("-fx-background-color:rgb(0,0,0,0.7);");
+		region.visibleProperty().bind(indicator.visibleProperty());
+                // ConnectingLabel
+		connectingLabel.setStyle("-fx-text-fill:white; -fx-font-size:17px; -fx-font-weight:bold;");
+		connectingLabel.visibleProperty().bind(indicator.visibleProperty());
+
 
     }
 
@@ -134,7 +179,7 @@ public class FXMLDocumentController implements Initializable {
 
             stage.setTitle("Noveau Compte");
 
-            Scene scene = new Scene(parent, 450, 400);
+            Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -152,6 +197,7 @@ public class FXMLDocumentController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText(" Fields empty");
             alert.showAndWait();
+            indicator.setVisible(false);
 
             return false;
         }
@@ -169,6 +215,7 @@ public class FXMLDocumentController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("invalide Email");
             alert.showAndWait();
+            indicator.setVisible(false);
 
             return false;
         }

@@ -26,11 +26,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#logout" text="logout" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                    </items>
-                </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
                         <MenuItem mnemonicParsing="false" text="About" />
@@ -64,7 +59,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="642.0" prefWidth="615.0">
                             <children>
-                                <fx:include fx:id="includeID3" source="FXML.fxml" />
+                                <fx:include fx:id="includeID3" source="Message.fxml" />
                             </children>
                         </AnchorPane>
                     </content>

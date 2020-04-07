@@ -17,21 +17,27 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.stage.FileChooser;
 import javax.xml.datatype.XMLGregorianCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
@@ -91,6 +97,45 @@ public class FXMLController implements Initializable {
         datecreation.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
 
         table.setItems(list);
+        
+             // Create ContextMenu
+          Label label = new Label();
+        ContextMenu contextMenu = new ContextMenu();
+ 
+        MenuItem item1 = new MenuItem("reclamer");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                label.setText("Select Menu Item 1");
+            }
+        });
+        MenuItem item2 = new MenuItem("delete");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    deleteconv(event);
+                    label.setText("Select Menu Item 2");
+                } catch (Exception ex) {
+                    Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+ 
+        // Add MenuItem to ContextMenu
+        contextMenu.getItems().addAll(item1, item2);
+ 
+        // When user right-click on Circle
+        table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+ 
+            @Override
+            public void handle(ContextMenuEvent event) {
+ 
+                contextMenu.show(table, event.getScreenX(), event.getScreenY());
+            }
+        });
 
     }
      public void deleteconv(ActionEvent event) throws Exception {

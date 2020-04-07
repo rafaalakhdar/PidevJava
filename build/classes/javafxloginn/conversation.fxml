@@ -25,17 +25,22 @@
          <top>
             <HBox prefHeight="40.0" prefWidth="898.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="nomconv" prefHeight="31.0" prefWidth="156.0" translateX="330.0">
+                  <Label fx:id="lblmail" layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="220.0">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <Label fx:id="dateconv" prefHeight="31.0" prefWidth="158.0" translateX="350.0">
+                  <Label fx:id="nomconv" prefHeight="31.0" prefWidth="156.0" translateX="170.0">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <ComboBox prefHeight="33.0" prefWidth="150.0" promptText="Membres " translateX="400.0" />
+                  <Label fx:id="dateconv" prefHeight="31.0" prefWidth="158.0" translateX="190.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+                  <ComboBox prefHeight="33.0" prefWidth="150.0" promptText="Membres " translateX="200.0" />
                </children>
             </HBox>
          </top>
@@ -99,16 +104,8 @@
          <menus>
             <Menu mnemonicParsing="false" text="Acceuil">
                <items>
-                  <Menu mnemonicParsing="false" text="Conversations">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="users">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="List amis" />
-                     </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#addconv" text="New conversation" />
+                  <MenuItem mnemonicParsing="false" text="List amis" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#homeAction" text="Home page" />
                   <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />

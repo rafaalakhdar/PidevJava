@@ -23,11 +23,18 @@ import utilitez.MyConnection;
 
 import entities.User;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionModel;
+import javafx.scene.input.ContextMenuEvent;
 
 /**
  * FXML Controller class
@@ -94,6 +101,45 @@ public class TableController implements Initializable {
         pays.setCellValueFactory(new PropertyValueFactory<>("pays"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         table.setItems(list);
+        
+             // Create ContextMenu
+          Label label = new Label();
+        ContextMenu contextMenu = new ContextMenu();
+ 
+        MenuItem item1 = new MenuItem("reclamer");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                label.setText("Select Menu Item 1");
+            }
+        });
+        MenuItem item2 = new MenuItem("delete");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    deleteuser(event);
+                    label.setText("Select Menu Item 2");
+                } catch (Exception ex) {
+                    Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+ 
+        // Add MenuItem to ContextMenu
+        contextMenu.getItems().addAll(item1, item2);
+ 
+        // When user right-click on Circle
+        table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+ 
+            @Override
+            public void handle(ContextMenuEvent event) {
+ 
+                contextMenu.show(table, event.getScreenX(), event.getScreenY());
+            }
+        });
 
     }
 

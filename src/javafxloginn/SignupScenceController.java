@@ -28,6 +28,8 @@ import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.Node;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import utilitez.MyConnection;
 import utilitez.SHA;
@@ -249,5 +251,53 @@ public class SignupScenceController implements Initializable {
 
         return true;
     }
+    
+    
+ @FXML
+    private void signInFb(ActionEvent event) {
+         String domain = "http://localhost";
+        String appId = "1020906611394409";
+        String appSecret = "c8163148dd16e6e2b4e29fa9648a71c1";
 
+        String authUrl = "https://www.facebook.com/dialog/oauth?\n"
+                + "                    client_id=1020906611394409\n"
+                + "                    &redirect_uri=https://www.facebook.com/connect/login_success.html \n"
+                + "                    &client_secret=9f4784603794d68b12fc2999e77745b1&response_type=token&scope=email,user_hometown,public_profile";
+
+        System.setProperty("webdriver.chrome.driver", "D:/aaa/chromedriver.exe");
+
+        WebDriver driver = new ChromeDriver();
+        driver.get(authUrl);
+
+        System.out.println(driver.getCurrentUrl());
+        String accessToken;
+
+        boolean b = true;
+        while (b) {
+//            if (!driver.getCurrentUrl().contains("facebook.com")) {
+//
+//                String url = driver.getCurrentUrl();
+//                accessToken = url.replaceAll(".*#access_token=(.+)&.*", "$1");
+//                System.out.println("test");
+//                driver.quit();
+//                b = false;
+//                FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
+//                String fields = "name,first_name,last_name,email,address,picture";
+//                User user = fbClient.fetchObject("me", User.class, Parameter.with("fields", fields));
+//                System.out.println(user.toString());
+//                System.out.println(user.getName());
+//                System.out.println(user.toString());
+//
+//                UserService us = new UserService();
+//                if (us.searchUserByEmailOnly(user.getEmail()) != null) {
+//                    User u = us.searchUserByEmailOnly(user.getEmail().toLowerCase());
+//                    
+//                    
+//                }
+//
+//            }
+//
+        }
+
+    }
 }

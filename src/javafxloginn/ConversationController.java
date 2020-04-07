@@ -19,10 +19,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import services.UserService;
 
 /**
  * FXML Controller class
@@ -38,6 +40,9 @@ public class ConversationController implements Initializable {
 
     @FXML
     private Button btn2;
+    
+    @FXML
+    private Label lblmail;
 
     @FXML
     private ListView listeMsg;
@@ -51,6 +56,8 @@ public class ConversationController implements Initializable {
     }
 
     public void logout(ActionEvent event) {
+        UserService us =new UserService();
+        us.editstatusOff(lblmail.getText());
         Platform.exit();
         System.exit(0);
     }
@@ -73,6 +80,9 @@ public class ConversationController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    void setdata(String mail){
+    lblmail.setText(mail);
     }
 
     public void editconversationAction(ActionEvent event) {
@@ -150,6 +160,22 @@ public class ConversationController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    public void addconv(ActionEvent event){
+         try {
+
+            Stage stage = (Stage) menubar.getScene().getWindow();
+            Parent parent = FXMLLoader.load(getClass().getResource("GroupScene.fxml"));
+            Scene scene = new Scene(parent);
+            stage.setTitle("New conversation");
+
+            stage.setScene(scene);
+            stage.show();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    
     }
 
 }

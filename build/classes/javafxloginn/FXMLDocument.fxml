@@ -4,15 +4,19 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane id="paneLogin" prefHeight="455.0" prefWidth="618.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.FXMLDocumentController">
     <children>
+      <MediaView fx:id="mediaView" fitHeight="500.0" fitWidth="618.0" preserveRatio="false" />
         <Button layoutX="244.0" layoutY="333.0" mnemonicParsing="false" onAction="#Login" prefHeight="53.0" prefWidth="130.0" text="Login">
             <font>
                 <Font size="18.0" />
@@ -49,5 +53,12 @@
          <font>
             <Font name="System Bold Italic" size="13.0" />
          </font></Hyperlink>
+               <Region fx:id="region" prefHeight="455.0" prefWidth="618.0" visible="false" />
+      <ProgressIndicator fx:id="indicator" prefHeight="455.0" prefWidth="618.0" visible="false" />
+      <Label fx:id="connectingLabel" prefHeight="39.0" prefWidth="142.0" text="Connecting....." translateX="220.0" translateY="195.0" visible="false">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
