@@ -47,6 +47,19 @@ public class UserService {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+      public void changepassword(String s1, String email) {
+        try {
+            String requete = "update user set password=? where email=?";
+            PreparedStatement pst = cnx2.prepareStatement(requete);
+            pst.setString(1, s1);
+            pst.setString(2, email);
+            pst.executeUpdate();
+            System.out.println("Modification effectué avec succés");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
   
    public boolean connect(String mail,String mdp)
     {   boolean test= true;

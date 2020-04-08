@@ -28,8 +28,12 @@ import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.Node;
+import javafx.scene.control.TextInputDialog;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import services.ServiceNotification;
+import services.ServiceRandomMailConfirmation;
+import utilitez.Mailing;
 
 import utilitez.MyConnection;
 import utilitez.SHA;
@@ -40,6 +44,7 @@ import utilitez.SHA;
  * @author Merna
  */
 public class SignupScenceController implements Initializable {
+    ServiceRandomMailConfirmation serviceMail = new ServiceRandomMailConfirmation();
 
     @FXML
     private TextField txtUserName;
@@ -89,12 +94,24 @@ public class SignupScenceController implements Initializable {
 
         if (validateName() & validateEmaill() & validatePassword() & validateFields()) {
 
+             String code =  serviceMail.generateRandomString();
+              System.out.println(code);
+              String to = txtEmail.getText();
+                String subject = "Confirmation d'inscription";
+                String message =  "Bienvenu "+txtUserName.getText()+" From "+comboboxCountry.getValue() +" dans notre application voici votre code de confirmation "+ code + "\n  Veillez saisir votre code pour confirmer votre inscription" ;
+                String usermail = "rafaa.lakhdhar@esprit.tn";
+                String passmail = "191SMT4905";
+                 Mailing.send(to,subject, message, usermail, passmail);
+            
+            
+            
             String username = txtUserName.getText();
             String email = txtEmail.getText();
             String password = txtPassword.getText();
             String gender = comboboxGender.getValue();
             String country = comboboxCountry.getValue();
             String statu = "Offline";
+            if (verifconfirMail(code)==true){
             try {
                 Connection cnx2 = MyConnection.getInstance().getCnx();
                 
@@ -122,6 +139,9 @@ public class SignupScenceController implements Initializable {
             stage.setScene(scene);
             stage.show();
             ((Node) (event.getSource())).getScene().getWindow().hide();
+                    ServiceNotification.showNotif("Bienvenu", "Bienvenu dans Tunisian Got Talent ");
+
+                 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -132,7 +152,7 @@ public class SignupScenceController implements Initializable {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
-        }
+        }}
     }
 
     /**
@@ -167,6 +187,27 @@ public class SignupScenceController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+    
+        public boolean verifconfirMail(String code)
+    {
+        TextInputDialog dialog = new TextInputDialog("");
+                dialog.setTitle("Confirmez votre inscription");
+                dialog.setHeaderText("Un mail vous a été envoyer où vous trouvez le code");
+                dialog.setContentText("Entrez votre code de confirmation:");
+                Optional<String> result = dialog.showAndWait();
+                if (result.get().equals(code)){
+                    
+                        if (result.get().equals(code))
+                        {
+                            return true;
+                        }
+                }
+                else
+                {
+                    return verifconfirMail(code);
+                }
+                return false;
     }
 
     private boolean validateName() {

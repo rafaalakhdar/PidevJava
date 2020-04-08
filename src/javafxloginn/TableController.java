@@ -25,6 +25,7 @@ import entities.User;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -34,6 +35,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionModel;
+import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 
 /**
@@ -45,6 +47,8 @@ public class TableController implements Initializable {
 
     @FXML
     private Button efface;
+    @FXML
+    private TextField searchfield;
     @FXML
     private TableView<User> table;
     @FXML
@@ -101,6 +105,30 @@ public class TableController implements Initializable {
         pays.setCellValueFactory(new PropertyValueFactory<>("pays"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         table.setItems(list);
+       
+         /**
+         * *****************Recherche******************************
+         */
+        ObservableList data = table.getItems();
+        searchfield.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (oldValue != null && (newValue.length() < oldValue.length())) {
+                table.setItems(data);
+            }
+            String value = newValue.toLowerCase();
+            ObservableList<User> subentries = FXCollections.observableArrayList();
+
+            long count = table.getColumns().stream().count();
+            for (int i = 0; i < table.getItems().size(); i++) {
+                for (int j = 0; j < count; j++) {
+                    String entry = "" + table.getColumns().get(j).getCellData(i);
+                    if (entry.toLowerCase().contains(value)) {
+                        subentries.add(table.getItems().get(i));
+                        break;
+                    }
+                }
+            }
+             table.setItems(subentries);
+        });
         
              // Create ContextMenu
           Label label = new Label();
@@ -128,10 +156,10 @@ public class TableController implements Initializable {
             }
         });
  
-        // Add MenuItem to ContextMenu
+        // Add MenuItem 
         contextMenu.getItems().addAll(item1, item2);
  
-        // When user right-click on Circle
+        // When user right-click 
         table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
  
             @Override
@@ -142,6 +170,8 @@ public class TableController implements Initializable {
         });
 
     }
+    
+    
 
     public void deleteuser(ActionEvent event) throws Exception {
         try {

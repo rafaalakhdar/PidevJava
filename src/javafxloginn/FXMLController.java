@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,6 +37,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.stage.FileChooser;
@@ -57,6 +59,8 @@ public class FXMLController implements Initializable {
 }
     @FXML
     private Button btneface, btnupdate;
+      @FXML
+    private TextField searchfield;
 
     @FXML
     private TableView<Conversation> table;
@@ -97,6 +101,29 @@ public class FXMLController implements Initializable {
         datecreation.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
 
         table.setItems(list);
+         /**
+         * *****************Recherche******************************
+         */
+        ObservableList data = table.getItems();
+        searchfield.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (oldValue != null && (newValue.length() < oldValue.length())) {
+                table.setItems(data);
+            }
+            String value = newValue.toLowerCase();
+            ObservableList<Conversation> subentries = FXCollections.observableArrayList();
+
+            long count = table.getColumns().stream().count();
+            for (int i = 0; i < table.getItems().size(); i++) {
+                for (int j = 0; j < count; j++) {
+                    String entry = "" + table.getColumns().get(j).getCellData(i);
+                    if (entry.toLowerCase().contains(value)) {
+                        subentries.add(table.getItems().get(i));
+                        break;
+                    }
+                }
+            }
+             table.setItems(subentries);
+        });
         
              // Create ContextMenu
           Label label = new Label();
@@ -124,10 +151,10 @@ public class FXMLController implements Initializable {
             }
         });
  
-        // Add MenuItem to ContextMenu
+        // Add MenuItem
         contextMenu.getItems().addAll(item1, item2);
  
-        // When user right-click on Circle
+        // When user right-click 
         table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
  
             @Override

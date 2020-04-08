@@ -38,6 +38,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import services.ServiceNotification;
 import services.UserService;
 import utilitez.MyConnection;
 import utilitez.SHA;
@@ -71,7 +72,11 @@ public class FXMLDocumentController implements Initializable {
     String email,pwd;
     	public static MediaPlayer mediaPlayer;
 
-
+ void setMaill(String email) {
+        user.setText(email);
+        user.setEditable(false);
+        
+    }
     /**
      *
      */
@@ -100,6 +105,7 @@ public class FXMLDocumentController implements Initializable {
                         stage.setScene(scene);
                         stage.show();
                         ((Node) (event.getSource())).getScene().getWindow().hide();
+                        ServiceNotification.showNotif("Bienvenu Admin", " Tunisian Got Talent ");
 
                     }
                     status.setText("login success");
@@ -114,12 +120,14 @@ public class FXMLDocumentController implements Initializable {
                     MenubarController mbc = loader.getController();
                     mbc.setMail(email);
                     
+                    
                 
 
                     //stage.initOwner(stage);
                     stage.setScene(scene);
                     stage.show();
                     ((Node) (event.getSource())).getScene().getWindow().hide();
+                    ServiceNotification.showNotif("Welcome ", "Bienvenu dans Tunisian Got Talent ");
 
                 } else {
                     indicator.setVisible(true);
@@ -220,5 +228,21 @@ public class FXMLDocumentController implements Initializable {
             return false;
         }
     }
+@FXML
+    private void switchMdo(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            Parent parent = FXMLLoader.load(getClass().getResource("changerpass.fxml"));
 
+            stage.setTitle("Noveau Compte");
+
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
