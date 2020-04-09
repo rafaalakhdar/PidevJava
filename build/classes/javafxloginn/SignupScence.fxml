@@ -36,6 +36,15 @@
         </ImageView>
             </graphic>
             </Button>
-      <Button fx:id="fcbSignIn" layoutX="125.0" layoutY="406.0" mnemonicParsing="false" onAction="#signInFb" text="Sign in with Facebook" />
+      <Button fx:id="fcbSignIn" layoutX="105.0" layoutY="408.0" mnemonicParsing="false" onAction="#signInFb" prefHeight="30.0" prefWidth="214.0" text="Sign in with Facebook" />
+      <Button fx:id="gomap" layoutX="363.0" layoutY="290.0" mnemonicParsing="false" onAction="#mapadresseAction" prefHeight="35.0" prefWidth="42.0">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@/img/maps.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

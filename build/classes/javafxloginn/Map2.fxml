@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.BorderPane?>
+
+
+<?import com.lynden.gmapsfx.GoogleMapView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="616.0" prefWidth="737.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.Map2Controller">
+       <children>
+        <GoogleMapView fx:id="mapView" prefHeight="500.0" prefWidth="700.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0.0"/>
+        <TextField fx:id="addressTextField" onAction="#addressTextFieldAction" prefHeight="27.0" prefWidth="274.0" promptText="Address" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10" />
+    </children>
+</AnchorPane>

@@ -188,6 +188,22 @@ public class SignupScenceController implements Initializable {
             ex.printStackTrace();
         }
     }
+    @FXML
+    public void mapadresseAction(ActionEvent event) {
+        try {
+
+            Stage stage = new Stage();
+            Parent parent = FXMLLoader.load(getClass().getResource("Map.fxml"));
+            Scene scene = new Scene(parent);
+                                      stage.setTitle("Talent Adresse");
+
+            stage.setScene(scene);
+            stage.show();
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     
         public boolean verifconfirMail(String code)
     {

@@ -107,7 +107,7 @@ public class MessageController implements Initializable {
         image.setCellValueFactory(new PropertyValueFactory<>("image"));
         date.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
         //idconv.setCellValueFactory(new PropertyValueFactory<>("conversationId"));
-       // iduser.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        iduser.setCellValueFactory(new PropertyValueFactory<>("userId"));
      
 
         table.setItems(list);
