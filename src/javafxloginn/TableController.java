@@ -37,6 +37,12 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.util.Duration;
+import services.UserService;
+import tray.animations.AnimationType;
+import static tray.notification.NotificationType.SUCCESS;
+import tray.notification.TrayNotification;
+import utilitez.Mailing;
 
 /**
  * FXML Controller class
@@ -68,21 +74,19 @@ public class TableController implements Initializable {
 
     PreparedStatement pst = null;
     ResultSet rs = null;
-        Connection cnx2;
+    Connection cnx2;
 
-    public TableController(){
-      cnx2 = MyConnection.getInstance().getCnx();
+    public TableController() {
+        cnx2 = MyConnection.getInstance().getCnx();
 
-}
+    }
 
     public ObservableList<User> list = FXCollections.observableArrayList();
-
 
     @FXML
     public void listeTalent() {
 
         try {
-           
 
             String requete = "SELECT * FROM user";
             PreparedStatement stat = cnx2.prepareStatement(requete);
@@ -91,7 +95,6 @@ public class TableController implements Initializable {
                 list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
 
             }
-     
 
         } catch (SQLException ex) {
 
@@ -105,8 +108,8 @@ public class TableController implements Initializable {
         pays.setCellValueFactory(new PropertyValueFactory<>("pays"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         table.setItems(list);
-       
-         /**
+
+        /**
          * *****************Recherche******************************
          */
         ObservableList data = table.getItems();
@@ -127,24 +130,34 @@ public class TableController implements Initializable {
                     }
                 }
             }
-             table.setItems(subentries);
+            table.setItems(subentries);
         });
-        
-             // Create ContextMenu
-          Label label = new Label();
+
+        // Create ContextMenu
+        Label label = new Label();
         ContextMenu contextMenu = new ContextMenu();
- 
-        MenuItem item1 = new MenuItem("reclamer");
+
+        MenuItem item1 = new MenuItem("Reclamer");
         item1.setOnAction(new EventHandler<ActionEvent>() {
- 
+
             @Override
             public void handle(ActionEvent event) {
                 label.setText("Select Menu Item 1");
+                User user = (User) table.getSelectionModel().getSelectedItem();
+                ObservableValue<String> x = email.getCellObservableValue(user);
+                //System.out.println(x.getValue());
+
+                String to = x.getValue();
+                String subject = "Reclamation Admin TGT";
+                String message = " Vous avez recu cette Reclamation From service reclamation de notre application\na cause d'une mauvaise utilisation de la conversation au cours du Chat ";
+                String usermail = "rafaa.lakhdhar@esprit.tn";
+                String passmail = "191SMT4905";
+                Mailing.send(to, subject, message, usermail, passmail);
             }
         });
-        MenuItem item2 = new MenuItem("delete");
+        MenuItem item2 = new MenuItem("Delete");
         item2.setOnAction(new EventHandler<ActionEvent>() {
- 
+
             @Override
             public void handle(ActionEvent event) {
                 try {
@@ -155,41 +168,61 @@ public class TableController implements Initializable {
                 }
             }
         });
- 
+        MenuItem item3 = new MenuItem("Block");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    User user = (User) table.getSelectionModel().getSelectedItem();
+                    ObservableValue<Integer> y = id.getCellObservableValue(user);
+                    ObservableValue<String> n = nom.getCellObservableValue(user);
+
+                    UserService us = new UserService();
+                    us.block(y.getValue());
+                    TrayNotification tray = new TrayNotification("Information", "L'utilisateur " + n.getValue() + " blocké ", SUCCESS);
+                    tray.setAnimationType(AnimationType.POPUP);
+                    tray.showAndDismiss(Duration.seconds(3));
+
+                    label.setText("Select Menu Item 3");
+                } catch (Exception ex) {
+                    Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
         // Add MenuItem 
-        contextMenu.getItems().addAll(item1, item2);
- 
+        contextMenu.getItems().addAll(item1, item2, item3);
+
         // When user right-click 
         table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
- 
+
             @Override
             public void handle(ContextMenuEvent event) {
- 
+
                 contextMenu.show(table, event.getScreenX(), event.getScreenY());
             }
         });
 
     }
-    
-    
 
     public void deleteuser(ActionEvent event) throws Exception {
         try {
-          
+
             User user = (User) table.getSelectionModel().getSelectedItem();
 
             String requete = "delete FROM user where id=?";
             pst = cnx2.prepareStatement(requete);
             pst.setInt(1, user.getId());
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure to delete?");
-                Optional <ButtonType> action = alert.showAndWait();
-                
-                if(action.get() == ButtonType.OK){
-            pst.executeUpdate();
-                }
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure to delete?");
+            Optional<ButtonType> action = alert.showAndWait();
+
+            if (action.get() == ButtonType.OK) {
+                pst.executeUpdate();
+            }
             pst.close();
 
         } catch (SQLException e1) {
@@ -208,7 +241,6 @@ public class TableController implements Initializable {
     public void updateuser(ActionEvent event) {
 
         try {
-           
 
             String requete = "SELECT * FROM user";
             PreparedStatement stat = cnx2.prepareStatement(requete);
@@ -217,7 +249,7 @@ public class TableController implements Initializable {
                 list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
 
             }
-            
+
         } catch (SQLException ex) {
 
             System.out.println(ex.getMessage());

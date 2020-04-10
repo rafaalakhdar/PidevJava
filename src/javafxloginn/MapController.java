@@ -5,6 +5,7 @@
  */
 package javafxloginn;
 
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.lynden.gmapsfx.GoogleMapView;
@@ -19,6 +20,7 @@ import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
+import entities.Etablissement;
 import entities.User;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,21 +43,26 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
 import org.json.simple.JSONArray;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import services.ListEtablissement;
 
 public class MapController implements Initializable {
 
     @FXML
-    private Label latitudeLabel;
+    private TextField latitudeLabel;
 
     @FXML
-    private Label longitudeLabel;
+    private TextField longitudeLabel;
     @FXML
     private AnchorPane searchAP;
-    private ObservableList<User> data;
+    private ObservableList<Etablissement> data;
+    private String key;
+    
 
     public AnchorPane getSearchAP() {
         return searchAP;
@@ -74,7 +81,8 @@ public class MapController implements Initializable {
     }
 
     @FXML
-    private GoogleMapView googleMapView;
+    private GoogleMapView googleMapView ;
+     //protected GoogleMapView mapView = new GoogleMapView("de-DE", "AIzaSyA0fIjA3jrfnuxAdhkrEoSlFhenvUOULH8");
 
     private GoogleMap map;
 
@@ -85,14 +93,7 @@ public class MapController implements Initializable {
     public void setMap(GoogleMap map) {
         this.map = map;
     }
-    public void etabmarkers(ObservableList<User> data) throws IOException
-    {
-        
-             
-         
-       
-        
-    }
+ 
 
     private DecimalFormat formatter = new DecimalFormat("###.00000");
     private GeocodingService geocodingService;
@@ -117,14 +118,17 @@ public class MapController implements Initializable {
             }
         });
     }
+        public void setKey(String key) {
+        this.key = key;
+    }
 
     protected void configureMap() throws IOException {
 
         MapOptions mapOptions = new MapOptions();
 
         mapOptions.center(new LatLong(36.80040, 10.18662))
-                .mapType(MapTypeIdEnum.HYBRID)
-                .zoom(15);
+                .mapType(MapTypeIdEnum.ROADMAP)
+                .zoom(8);
         map = googleMapView.createMap(mapOptions, false);
         MarkerOptions markerOptions = new MarkerOptions();
         map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
@@ -141,7 +145,7 @@ public class MapController implements Initializable {
             map.clearMarkers();
             map.addMarker(marker);
             ///
-            URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitudeLabel.getText().replace(',','.')+","+longitudeLabel.getText().replace(',', '.')+"&sensor=true");
+            URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitudeLabel.getText().replace(',','.')+","+longitudeLabel.getText().replace(',', '.')+"&sensor=true&key=AIzaSyA0fIjA3jrfnuxAdhkrEoSlFhenvUOULH8");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             String formattedAddress = "";
             
@@ -182,6 +186,23 @@ public class MapController implements Initializable {
             ///
 
         });
+        ListEtablissement LDS = new ListEtablissement();
+        data = LDS.ListEtab();
+                for (Etablissement etab : data)
+         {
+            
+            MarkerOptions markerOptionss = new MarkerOptions();
+ 
+            markerOptionss.position(new LatLong(etab.getLatitude(),etab.getLongitude()))
+                    .visible(Boolean.TRUE).label(" TGT : " +etab.getName());
+            //System.out.println(""+etab.getName());
+            Marker markers = new Marker(markerOptionss);
+            map.addMarker(markers);
+         }
+//         clear.setOnMouseClicked((MouseEvent event) -> {
+//             
+//         map.clearMarkers();
+//         });
          
 
   
@@ -230,11 +251,11 @@ public class MapController implements Initializable {
     private void addposition(ActionEvent event) throws IOException {
     }
 
-    public Label getLatitudeLabel() {
+    public TextField getLatitudeLabel() {
         return latitudeLabel;
     }
 
-    public Label getLongitudeLabel() {
+    public TextField getLongitudeLabel() {
         return longitudeLabel;
     }
 

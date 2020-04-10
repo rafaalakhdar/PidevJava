@@ -63,6 +63,9 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "status")
     private String status;
+    @Basic(optional = false)
+    @Column(name = "enabled")
+     private int enabled;
     @ManyToMany(mappedBy = "userCollection")
     private Collection<Conversation> conversationCollection;
     @OneToMany(mappedBy = "userId")
@@ -75,6 +78,47 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public User(Integer id, String nom, String email, String password, String sexe, String pays, String status, int enabled, Collection<Conversation> conversationCollection, Collection<Message> messageCollection) {
+        this.id = id;
+        this.nom = nom;
+        this.email = email;
+        this.password = password;
+        this.sexe = sexe;
+        this.pays = pays;
+        this.status = status;
+        this.enabled = enabled;
+        this.conversationCollection = conversationCollection;
+        this.messageCollection = messageCollection;
+    }
+
+    public User(Integer id, String nom, String email, int enabled) {
+        this.id = id;
+        this.nom = nom;
+        this.email = email;
+        this.enabled = enabled;
+    }
+
+    public User(String nom, String email, String password, String sexe, String pays) {
+        this.nom = nom;
+        this.email = email;
+        this.password = password;
+        this.sexe = sexe;
+        this.pays = pays;
+        
+    }
+
+    public User(Integer id, String nom, String email, String password, String sexe, String pays, String status, int enabled) {
+        this.id = id;
+        this.nom = nom;
+        this.email = email;
+        this.password = password;
+        this.sexe = sexe;
+        this.pays = pays;
+        this.status = status;
+        this.enabled = enabled;
+    }
+
+    
     public User(Integer id, String nom, String email, String password, String sexe, String pays, String status) {
         this.id = id;
         this.nom = nom;
@@ -101,6 +145,15 @@ public class User implements Serializable {
         this.nom = nom;
     }
 
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
+    
     public String getEmail() {
         return email;
     }

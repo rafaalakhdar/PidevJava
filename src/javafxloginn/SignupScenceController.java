@@ -1,5 +1,9 @@
 package javafxloginn;
 
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.Version;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -33,6 +37,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import services.ServiceNotification;
 import services.ServiceRandomMailConfirmation;
+import services.UserService;
 import utilitez.Mailing;
 
 import utilitez.MyConnection;
@@ -45,6 +50,7 @@ import utilitez.SHA;
  */
 public class SignupScenceController implements Initializable {
     ServiceRandomMailConfirmation serviceMail = new ServiceRandomMailConfirmation();
+    UserService us = new UserService();
 
     @FXML
     private TextField txtUserName;
@@ -111,13 +117,14 @@ public class SignupScenceController implements Initializable {
             String gender = comboboxGender.getValue();
             String country = comboboxCountry.getValue();
             String statu = "Offline";
+            int enable=1;
             if (verifconfirMail(code)==true){
             try {
                 Connection cnx2 = MyConnection.getInstance().getCnx();
                 
-                String requete = "insert into user (nom,email,password,sexe,pays,status) values('" + username
+                String requete = "insert into user (nom,email,password,sexe,pays,status,enabled) values('" + username
                         + "','" + email + "','" + SHA.encrypt(password) + "','"
-                        + gender + "','" + country +"','" + statu + "')";
+                        + gender + "','" + country +"','" + statu + "','" + enable + "')";
                 Statement st = cnx2.createStatement();
                 st.executeUpdate(requete);
                 clearFields();
@@ -243,19 +250,34 @@ public class SignupScenceController implements Initializable {
     }
 
     private boolean validateEmaill() {
+        if (us.searchByEmail(txtEmail.getText())==true)
+        {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("duplicate");
+            alert.setHeaderText(null);
+            alert.setContentText("Email deja utilisé");
+            ServiceNotification.showNotif("Alert", "Taper un autre Email ");
+                        alert.showAndWait();
+                        
+
+            
+        }
+        if (us.searchByEmail(txtEmail.getText())==false)
+        {
         Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
         Matcher m = p.matcher(txtEmail.getText());
         if (m.find() && m.group().equals(txtEmail.getText())) {
             return true;
-        } else {
+          } else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Erreur Email");
             alert.setHeaderText(null);
             alert.setContentText("Please Enter Valid Email");
             alert.showAndWait();
-
+}
             return false;
         }
+        return false;
     }
 
     private boolean validatePassword() {
@@ -313,11 +335,11 @@ public class SignupScenceController implements Initializable {
  @FXML
     private void signInFb(ActionEvent event) {
          String domain = "http://localhost";
-        String appId = "1020906611394409";
-        String appSecret = "c8163148dd16e6e2b4e29fa9648a71c1";
+        String appId = "270212743978426";
+        String appSecret = "a763c3ee6d23d55f098465f876295c21";
 
         String authUrl = "https://www.facebook.com/dialog/oauth?\n"
-                + "                    client_id=1020906611394409\n"
+                + "                    client_id=270212743978426\n"
                 + "                    &redirect_uri=https://www.facebook.com/connect/login_success.html \n"
                 + "                    &client_secret=9f4784603794d68b12fc2999e77745b1&response_type=token&scope=email,user_hometown,public_profile";
 
@@ -331,29 +353,29 @@ public class SignupScenceController implements Initializable {
 
         boolean b = true;
         while (b) {
-//            if (!driver.getCurrentUrl().contains("facebook.com")) {
-//
-//                String url = driver.getCurrentUrl();
-//                accessToken = url.replaceAll(".*#access_token=(.+)&.*", "$1");
-//                System.out.println("test");
-//                driver.quit();
-//                b = false;
-//                FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
-//                String fields = "name,first_name,last_name,email,address,picture";
-//                User user = fbClient.fetchObject("me", User.class, Parameter.with("fields", fields));
-//                System.out.println(user.toString());
-//                System.out.println(user.getName());
-//                System.out.println(user.toString());
-//
-//                UserService us = new UserService();
-//                if (us.searchUserByEmailOnly(user.getEmail()) != null) {
-//                    User u = us.searchUserByEmailOnly(user.getEmail().toLowerCase());
-//                    
-//                    
-//                }
-//
-//            }
-//
+            if (!driver.getCurrentUrl().contains("facebook.com")) {
+
+                String url = driver.getCurrentUrl();
+                accessToken = url.replaceAll(".*#access_token=(.+)&.*", "$1");
+                System.out.println("test");
+                driver.quit();
+                b = false;
+                FacebookClient fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
+                String fields = "name,first_name,last_name,email,address,picture";
+                User user = fbClient.fetchObject("me", User.class, Parameter.with("fields", fields));
+                System.out.println(user.toString());
+                System.out.println(user.getNom());
+                System.out.println(user.toString());
+
+                UserService us = new UserService();
+            //    if (us.searchUserByEmailOnly(user.getEmail()) != null) {
+             //       User u = us.searchUserByEmailOnly(user.getEmail().toLowerCase());
+                    
+                    
+            //    }
+
+            }
+
         }
 
     }

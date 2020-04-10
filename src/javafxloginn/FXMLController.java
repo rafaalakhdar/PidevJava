@@ -43,6 +43,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.stage.FileChooser;
 import javax.xml.datatype.XMLGregorianCalendar;
 import sun.util.calendar.LocalGregorianCalendar;
+import utilitez.Mailing;
 import utilitez.MyConnection;
 
 /**
@@ -129,14 +130,37 @@ public class FXMLController implements Initializable {
           Label label = new Label();
         ContextMenu contextMenu = new ContextMenu();
  
-        MenuItem item1 = new MenuItem("reclamer");
+      /*  MenuItem item1 = new MenuItem("reclamer");
         item1.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
             public void handle(ActionEvent event) {
+                try {
                 label.setText("Select Menu Item 1");
+            Conversation conv = (Conversation) table.getSelectionModel().getSelectedItem();
+                ObservableValue<Integer> x= id.getCellObservableValue(conv);
+                //System.out.println(x.getValue());
+                String requete = " SELECT user.id FROM user JOIN conversation_user ON user.id = conversation_user.user_id "
+                        + "JOIN conversation ON conversation.id = conversation_user.conversation_id "
+                        + "GROUP BY conversation.id ='"+x+"' ";
+                
+                    pst = cnx2.prepareStatement(requete);
+                    ResultSet resultSet = pst.executeQuery();
+                    while (resultSet.next()) {
+                    int a =resultSet.getInt(1);
+                    System.out.println(x.getValue());
+                    System.out.println(a+" ");
+                    String to = x.getValue();
+                    String subject = "Reclamation Admin TGT";
+                    String message =  " Vous avez recu cette Reclamation From service reclamation de notre application\na cause d'une mauvaise utilisation de la conversation au cours du Chat " ;
+                    String usermail = "rafaa.lakhdhar@esprit.tn";
+                    String passmail = "191SMT4905";
+                    Mailing.send(to,subject, message, usermail, passmail);
+                    }} catch (SQLException ex) {
+                    Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        });
+        });*/
         MenuItem item2 = new MenuItem("delete");
         item2.setOnAction(new EventHandler<ActionEvent>() {
  
@@ -152,7 +176,7 @@ public class FXMLController implements Initializable {
         });
  
         // Add MenuItem
-        contextMenu.getItems().addAll(item1, item2);
+        contextMenu.getItems().addAll(item2);
  
         // When user right-click 
         table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {

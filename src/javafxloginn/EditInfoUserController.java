@@ -8,9 +8,13 @@ package javafxloginn;
 import entities.User;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
@@ -27,7 +31,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import services.ServiceNotification;
 import services.UserService;
+import utilitez.MyConnection;
 
 /**
  * FXML Controller class
@@ -52,26 +58,61 @@ public class EditInfoUserController implements Initializable {
     private Button back;
     @FXML
     private Button update;
-   
+        private List<String> liste;
+
+    public List<String> getListe() {
+        return liste;
+    }
+
+    public void setListe(List<String> liste) {
+        this.liste = liste;
+    }
+      void send(String email) {
+        lblmail.setText(email);
+        txtEmail.setText(lblmail.getText());
+        
+        liste= UserService.getBymail(lblmail.getText());
+        lblmail.setVisible(false);
+        txtUserName.setText(liste.get(0));
+        
+        txtSexe.setText(liste.get(2));
+        txtPays.setText(liste.get(3));
+        txtPassword.setText(liste.get(1));
+        txtPassword.setEditable(false);
+    }
+     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
        
     }
     
-    public void updateuser(){
+    public void updateuser(ActionEvent event){
+         try {
+            
+            PreparedStatement pt = MyConnection.getInstance().getCnx()
+                    .prepareStatement("update user set nom=?,email=? ,sexe=? ,pays=?  where email='"+lblmail.getText()+"' ");
+            
+            pt.setString(1,txtUserName.getText());
+            pt.setString(2,txtEmail.getText());
+            
+            pt.setString(3,txtSexe.getText());
+            pt.setString(4,txtPays.getText());
+            
+            pt.executeUpdate();
+            btnBackAction(event);
+                      ServiceNotification.showNotif("Success " ,txtUserName.getText() + " Updated !!\nLogin with New Informations");
+                      
+         } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
          
-    
     }
     
-      void send(String email) {
-        lblmail.setText(email);
-        txtEmail.setText(lblmail.getText());
-        txtEmail.setEditable(false);
-    }
+   
 
     /**
      *

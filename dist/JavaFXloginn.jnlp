@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFXloginn.jar" size="3602036" download="eager" />
+    <jar href="JavaFXloginn.jar" size="3609859" download="eager" />
     <jar href="lib\GMapsFX-2.12.0.jar" size="207618" download="eager" />
     <jar href="lib\TrayNotification.jar" size="41019" download="eager" />
     <jar href="lib\client-4.0.1.jar" size="305386" download="eager" />
@@ -16,6 +16,7 @@
     <jar href="lib\controlsfx-samples-8.40.14.jar" size="725707" download="eager" />
     <jar href="lib\eclipselink.jar" size="8478776" download="eager" />
     <jar href="lib\httpclient-4.5.3.jar" size="747794" download="eager" />
+    <jar href="lib\jGoogleMaps.jar" size="178128" download="eager" />
     <jar href="lib\javafx-ui-controls.jar" size="1201545" download="eager" />
     <jar href="lib\javax.mail.jar" size="654100" download="eager" />
     <jar href="lib\javax.persistence_2.1.0.v201304241213.jar" size="164637" download="eager" />

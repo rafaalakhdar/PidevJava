@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.lynden.gmapsfx.GoogleMapView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -18,22 +19,14 @@
                </font>
             </Label>
             <JFXTextField fx:id="address" labelFloat="true" layoutX="14.0" layoutY="12.0" onAction="#search" prefHeight="25.0" prefWidth="196.0" promptText="Votre adresse .." />
-            <Label fx:id="latitudeLabel" alignment="CENTER_RIGHT" contentDisplay="LEFT" layoutX="284.0" layoutY="15.0" prefHeight="18.0" prefWidth="92.0">
-               <font>
-                  <Font name="Comic Sans MS" size="12.0" />
-               </font>
-            </Label>
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="432.0" layoutY="15.0" text="Longitude :">
                <font>
                   <Font name="Comic Sans MS Bold" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="longitudeLabel" alignment="CENTER_RIGHT" contentDisplay="LEFT" layoutX="470.0" layoutY="15.0" prefHeight="18.0" prefWidth="101.0">
-               <font>
-                  <Font name="Comic Sans MS" size="12.0" />
-               </font>
-            </Label>
             <JFXButton fx:id="save" layoutX="587.0" layoutY="11.0" onAction="#addposition" style="-fx-background-color: ff214f; -fx-text-fill: white;" text="Enregistrer" />
+            <TextField fx:id="latitudeLabel" layoutX="307.0" layoutY="9.0" prefHeight="31.0" prefWidth="120.0" />
+            <TextField fx:id="longitudeLabel" layoutX="489.0" layoutY="9.0" prefHeight="31.0" prefWidth="92.0" />
          </children>
       </AnchorPane>
     </children>

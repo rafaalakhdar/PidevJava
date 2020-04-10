@@ -41,12 +41,57 @@ public class UserService {
             
             while (rs.next()) {            
                 user.setStatus("Offline");
+                user.setEnabled(1);
             }
             
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+  
+      public static List<String> getBymail(String r) {
+        List<String> list= new ArrayList<>();
+         try {
+        String req = "select nom,password,sexe,pays from user where email ='"+r+"' ";
+       
+       
+             Statement ste= MyConnection.getInstance().getCnx().createStatement();
+
+           
+            ResultSet result=ste.executeQuery(req);
+            while (result.next()) {
+                
+                        list.add( result.getString(1));
+                      list.add( result.getString(2));
+                      list.add( result.getString(3));
+                      list.add( result.getString(4));
+                      
+                       
+                       
+                      
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+  
+   public boolean searchByEmail(String mail) {
+
+        try {
+            Statement ste = MyConnection.getInstance().getCnx().createStatement();
+            String req = "select * from user where email='" + mail + "'";
+            ResultSet rs = ste.executeQuery(req);
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
+    }
+  
       public void changepassword(String s1, String email) {
         try {
             String requete = "update user set password=? where email=?";
@@ -60,6 +105,30 @@ public class UserService {
         }
 
     }
+      
+       public static boolean mailUnique(String mail){
+        
+          int i=0;
+           try {
+               Statement ste= MyConnection.getInstance().getCnx().createStatement();
+               String req= "Select * from user WHERE email='"+mail+"'";
+               ResultSet result=ste.executeQuery(req);
+               
+               while(result.next()){
+                 // int id = result.getInt(1); //int id = result.getInt("id");
+                i++;
+                  
+               }
+               
+           } catch (SQLException ex) {
+               Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
+           }
+           return i==0;
+            
+        
+        
+    }
+
   
    public boolean connect(String mail,String mdp)
     {   boolean test= true;
@@ -95,7 +164,7 @@ public class UserService {
             while (rs.next()) 
             {
  
-                User user =new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                User user =new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7),rs.getInt(8));
 
                 arr.add(user);
             }
@@ -106,17 +175,18 @@ public class UserService {
         
     }
      
-       public void modifier(String nom,String email,String password,String sexe,String pays)
+       public void modifier(String nom,String email,String sexe,String pays,String password)
     { 
         try {
             
-            PreparedStatement pt = cnx2.prepareStatement("update user set nom=? , password=?  ,sexe=? ,pays=?  where email=? ");
+            PreparedStatement pt = cnx2.prepareStatement("update user set nom=? ,sexe=? ,pays=?  where password=? ");
             
             pt.setString(1,nom);
             pt.setString(2,email);
-            pt.setString(3,password);
-            pt.setString(4,sexe);
-            pt.setString(5,pays);
+            
+            pt.setString(3,sexe);
+            pt.setString(4,pays);
+            pt.setString(5,password);
             pt.executeUpdate();
          } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
@@ -190,4 +260,32 @@ public class UserService {
        
               
       }
+          
+           public void block(int id) {
+        try {
+            String requete = "update user set enabled = 0 where id = " + id;
+            PreparedStatement pst = cnx2.prepareStatement(requete);
+            pst.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+           
+            public int ckeckenabled(String s) {
+        int enabled=99;
+        String req = "select enabled from user where email =?";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = cnx2.prepareStatement(req);
+            preparedStatement.setString(1, s);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                enabled=resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return enabled;
+    }
+
 }
