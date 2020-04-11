@@ -11,6 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
@@ -57,7 +58,7 @@
         <VBox prefHeight="655.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
     </left>
     <center>
-        <WebView fx:id="web" prefHeight="200.0" prefWidth="1165.0" BorderPane.alignment="CENTER" />
+        <WebView fx:id="web" prefHeight="660.0" prefWidth="1189.0" BorderPane.alignment="CENTER" />
     </center>
     <bottom>
         <HBox BorderPane.alignment="CENTER">
@@ -107,12 +108,28 @@
                         </ImageView>
                     </graphic>
                 </Button>
-            <Button fx:id="updateinfo" mnemonicParsing="false" onAction="#updateinfoAction" text="Update Profil" translateX="350.0" />
-            <Label fx:id="mailfield" prefHeight="29.0" prefWidth="250.0" translateX="380.0" />
             </children>
             <effect>
                 <Blend />
             </effect>
         </HBox>
     </bottom>
+   <right>
+      <Pane prefHeight="648.0" prefWidth="172.0" BorderPane.alignment="CENTER">
+         <children>
+   <ImageView fx:id="img2" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true" >
+                    <image>
+                        <Image url="@/img/female.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="img" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/img/user.png" />
+                    </image>
+                </ImageView>
+            <Button fx:id="updateinfo" layoutX="27.0" layoutY="183.0" mnemonicParsing="false" onAction="#updateinfoAction" text="Update Profil" />
+            <Label fx:id="mailfield" layoutX="10.0" layoutY="151.0" prefHeight="29.0" prefWidth="172.0" />
+         </children>
+      </Pane>
+   </right>
 </BorderPane>

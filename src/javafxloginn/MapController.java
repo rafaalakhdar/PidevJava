@@ -33,6 +33,8 @@ import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -71,6 +73,7 @@ public class MapController implements Initializable {
     public void setSearchAP(AnchorPane searchAP) {
         this.searchAP = searchAP;
     }
+    private StringProperty addresss = new SimpleStringProperty();
 
     public TextField getAddress() {
         return address;
@@ -107,7 +110,7 @@ public class MapController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+addresss.bind(address.textProperty());
         googleMapView.addMapInializedListener(() -> {
             try {
                 configureMap();

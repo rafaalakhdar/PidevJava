@@ -12,7 +12,11 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import utilitez.Copy;
 import utilitez.MyConnection;
@@ -72,4 +76,29 @@ public class MessageService {
             System.out.println(e.getMessage());
         }
 }
+    
+     public List<Message> getmsg(Integer r) {
+         //User user = new User();
+        List<Message> msgs = new ArrayList<>();
+ String req = "SELECT `message`,`updated_at`,`user_id` FROM `message` WHERE `conversation_id` in (SELECT user_id FROM conversation_user WHERE conversation_id ='"+r+"')";
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = cnx2.prepareStatement(req);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Message m;
+                Map<String, Class<?>> User = null;
+                m = new Message(
+                        resultSet.getString("message"),
+                        resultSet.getDate("updated_at"), 
+                        (User) resultSet.getObject("user_id",User));
+                msgs.add(m);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return msgs;
+    } 
+    
 }

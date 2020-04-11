@@ -78,6 +78,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public User(Integer id, String nom, String sexe) {
+        this.id = id;
+        this.nom = nom;
+        this.sexe = sexe;
+    }
+    
+
     public User(Integer id, String nom, String email, String password, String sexe, String pays, String status, int enabled, Collection<Conversation> conversationCollection, Collection<Message> messageCollection) {
         this.id = id;
         this.nom = nom;
@@ -127,6 +134,10 @@ public class User implements Serializable {
         this.sexe = sexe;
         this.pays = pays;
         this.status = status;
+    }
+
+    public User(int aInt, String string, String string0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Integer getId() {

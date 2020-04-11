@@ -321,7 +321,7 @@ public class SignupScenceController implements Initializable {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("VErreur Fields");
             alert.setHeaderText(null);
-            alert.setContentText("Please Selct The sexe / pays");
+            alert.setContentText("Please Select The sexe / pays");
             alert.showAndWait();
 
             return false;

@@ -254,6 +254,7 @@ public class TableController implements Initializable {
 
             System.out.println(ex.getMessage());
         }
+        table.getItems().clear();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));

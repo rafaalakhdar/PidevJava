@@ -22,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 
 import javafx.scene.Parent;
@@ -38,6 +39,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import services.ServiceNotification;
 import services.UserService;
 import utilitez.MyConnection;
@@ -85,6 +88,18 @@ public class FXMLDocumentController implements Initializable {
         if (validateFields() & validateEmaill()) {
                 email = user.getText();
                 pwd = SHA.encrypt(pass.getText());
+                if (us.ckeckenabled(email) == 0) {
+            Notifications n = Notifications.create()
+                    .title("Erreur")
+                    .text("Compte désactivé\n use another compte")
+                    .graphic(null)
+                    .position(Pos.TOP_CENTER)
+                    .hideAfter(Duration.seconds(5));
+            n.showWarning();
+             user.clear();
+                pass.clear();
+            indicator.setVisible(false);
+        } else {
                 boolean test=us.connect(email, pwd);
             try {
                
@@ -148,7 +163,7 @@ public class FXMLDocumentController implements Initializable {
                 System.out.println(ex.getMessage());
                 }
 
-        }
+        }}
     }
 
     @Override
