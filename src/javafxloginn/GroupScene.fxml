@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="425.0" prefWidth="336.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="425.0" prefWidth="336.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.GroupSceneController">
     <Line endX="-72.0" fill="#e8e8e8" layoutX="95.0" layoutY="38.0" startX="-93.0" stroke="#dddddd" />
       <Line endX="15.0" endY="3.0" layoutX="298.0" layoutY="37.0" startX="-160.0" startY="3.0" stroke="#e8e8e8" />
       <Label layoutX="32.0" layoutY="28.0" prefHeight="17.0" prefWidth="116.0" text="Group Name" textFill="#e4e4e4">
@@ -31,7 +31,7 @@
          <String fx:value="list-cell" />
          <String fx:value="list-view" />
       </styleClass></ListView>
-   <Button fx:id="btnCreate" layoutX="245.0" layoutY="71.0" mnemonicParsing="false" text="Create" />
+   <Button fx:id="btnCreate" layoutX="245.0" layoutY="71.0" mnemonicParsing="false" onAction="#btnCreateAction" text="Create" />
    <Text fx:id="txtErrorGroupName" fill="#ff6159" layoutX="20.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="already have group with this name">
       <font>
          <Font name="System Bold" size="12.0" />

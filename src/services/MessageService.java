@@ -34,39 +34,40 @@ public class MessageService {
 
     public void ajoutermsg(Message m) {
         try {
-            int id = m.getIdM();
+            
             
             String message = m.getMessage();
-            String image = m.getImage();
-            java.util.Date creationDate = m.getCreatedAt();
-            User user = m.getUserId();
-            Conversation conv = m.getConversationId();
+            //String image = m.getImage();
+            java.util.Date creationDate;
+            creationDate = m.getDtmsg();
+            Integer user = m.getUsermsg();
+            Integer conv = m.getCvid();
             
             
-            String req = "INSERT INTO message (conversation_id,idM,message,image,created_at,user_id)  VALUES (?,?,?,?,?,?)";
+            String req = "INSERT INTO message (conversation_id,message,created_at,user_id)  VALUES (?,?,?,?)";
             PreparedStatement pst = cnx2.prepareStatement(req);
-            pst.setInt(2, id);
             
             
-            pst.setString(3, message);
-            pst.setDate(5, new java.sql.Date(creationDate.getTime()));
-      // ajout image, avec un id unique    
+            
+            pst.setString(2, message);
+            pst.setDate(3, new java.sql.Date(creationDate.getTime()));
+      /* ajout image, avec un id unique    
             UUID u = UUID.randomUUID();
-            String old = image;
+           String old = image;
             String extension = image.substring(image.lastIndexOf("."));
            image = image.substring(image.lastIndexOf("\\")+1,image.lastIndexOf("."));
            image = image + u.toString() + extension;
           // fin ajout image
-            pst.setString(4, image);
-            pst.setInt(6, user.getId());
-            pst.setInt(1, conv.getId());
+            pst.setString(4, image);*/
+            pst.setInt(4, user);
+            pst.setInt(1, conv);
             System.out.println(pst.toString());
             pst.executeUpdate();
           //deplacement vers le dossier du serveur web
-            File source = new File(old);
+           /* File source = new File(old);
             File dest = new File("C:\\wamp64\\www\\pi\\pi\\web\\conversation\\images\\"+image);
          
-        Copy.copyFileUsingStream(source,dest);
+        Copy.copyFileUsingStream(source,dest);*/
         //fin deplacement
             System.out.println("ajout msg good");
         } catch (SQLException ex) {
@@ -77,21 +78,22 @@ public class MessageService {
         }
 }
     
-     public List<Message> getmsg(Integer r) {
+     public List<Message> getallmsg(Integer c,Integer u) {
          //User user = new User();
         List<Message> msgs = new ArrayList<>();
- String req = "SELECT `message`,`updated_at`,`user_id` FROM `message` WHERE `conversation_id` in (SELECT user_id FROM conversation_user WHERE conversation_id ='"+r+"')";
+ String req = "SELECT m.message,m.user_id,m.created_at FROM message m,conversation c, user u,conversation_user cu WHERE u.id=cu.user_id AND cu.conversation_id=c.id and m.conversation_id=c.id and c.id='"+c+"' and u.id='"+u+"'";
         PreparedStatement preparedStatement;
         try {
             preparedStatement = cnx2.prepareStatement(req);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Message m;
-                Map<String, Class<?>> User = null;
+                
                 m = new Message(
                         resultSet.getString("message"),
-                        resultSet.getDate("updated_at"), 
-                        (User) resultSet.getObject("user_id",User));
+                        resultSet.getInt("user_id"),
+                        resultSet.getDate("created_at")
+                        );
                 msgs.add(m);
 
             }
@@ -101,4 +103,24 @@ public class MessageService {
         return msgs;
     } 
     
+  
+     
+     /*
+     
+        public synchronized void insertMessage(Message message) {
+        try {
+            getConnection();
+            query = "insert into Message(fontSize,`from`,`to`,date,fontColor,fontFamily,fontStyle,body,fontWeight,underLine)values (" + message.getFontsSize() + ",'" + message.getFrom() + "','"
+                    + message.getTo() + "','" + message.getDate() + "','" + message.getFontColor() + "','" + message.getFontFamily() + "','"
+                    + message.getFontStyle() + "','" + message.getBody() + "','" + message.getFontWeight() + "','" + message.getUnderline().toString() + "')";
+
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+            closeResources();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+     */
 }

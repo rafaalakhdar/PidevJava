@@ -13,10 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utilitez.MyConnection;
+import utilitez.ServiceSysdate;
 
 /**
  *
@@ -25,25 +27,45 @@ import utilitez.MyConnection;
 public class ConversationService {
  
      Connection cnx2;
+     ServiceSysdate ss = new ServiceSysdate();
     
        public ConversationService() {
         cnx2 = MyConnection.getInstance().getCnx();
     }
         public void ajouterConv (Conversation conv)
     {
+        
         try {
             Statement st =cnx2.createStatement();
-            String req="insert into conversation values("+conv.getNom()+"','"+conv.getUserCollection()+"')";
+            String req="insert into conversation values("+conv.getNom()+"')";
             st.executeUpdate(req);
             PreparedStatement pt = cnx2.prepareStatement("select id from conversation ORDER BY id DESC LIMIT 0, 1");
             ResultSet rs = pt.executeQuery();
             while (rs.next()) {            
-                conv.setId(rs.getInt(1));
+                conv.setDateCreation(ss.selectDate());
             }
             
         } catch (SQLException ex) {
             Logger.getLogger(ConversationService.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+        
+        public int searchBynom(String nom) {
+         int x = 9999;
+     
+          String req = "select id from conversation where nom='" + nom + "'";
+          PreparedStatement preparedStatement;
+        try {
+            preparedStatement = cnx2.prepareStatement(req);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                x = resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return x;
     }
          public List<Conversation> getAllConv(Integer r) {
         List<Conversation> conv = new ArrayList<>();

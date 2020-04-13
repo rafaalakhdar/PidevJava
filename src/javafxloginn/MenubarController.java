@@ -100,7 +100,7 @@ public class MenubarController implements Initializable {
 
             stage.setScene(scene);
             stage.show();
-            //((Node) (event.getSource())).getScene().getWindow().hide();
+            
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

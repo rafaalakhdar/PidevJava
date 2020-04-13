@@ -317,6 +317,42 @@ public class UserService {
         return enabled;
     }
 
+    public int searchBynomuser(String nom) {
+         int u = 9999;
+     
+          String req = "select id from user where nom='" + nom + "'";
+          PreparedStatement preparedStatement;
+        try {
+            preparedStatement = cnx2.prepareStatement(req);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                u = resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return u;
+    }
+    
+        public String searchByid(int id) {
+         String u = "";
+     
+          String req = "select nom from user where id='" + id + "'";
+          PreparedStatement preparedStatement;
+        try {
+            preparedStatement = cnx2.prepareStatement(req);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                u = resultSet.getString("nom");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return u;
+    }
+    
     public String ckecksexe(String s) {
         sexe = "";
         String req = "select sexe from user where email =?";

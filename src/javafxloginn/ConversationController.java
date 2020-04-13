@@ -7,6 +7,7 @@ package javafxloginn;
 
 import com.sun.javafx.geom.ConcentricShapePair;
 import entities.Conversation;
+import entities.Message;
 import entities.User;
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +17,14 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -26,6 +32,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +49,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -50,9 +59,11 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import services.ConversationService;
+import services.MessageService;
 import services.ServiceNotification;
 import services.UserService;
 import utilitez.MyConnection;
@@ -64,16 +75,20 @@ import utilitez.MyConnection;
  */
 public class ConversationController implements Initializable {
 
-    @FXML
-    private Button btn1;
+ 
     @FXML
     private MenuBar menubar;
-
     @FXML
-    private Button btn2;
+    private TabPane tabPane;
+
+
 
     @FXML
     private Label lblmail;
+    @FXML
+    private Tab homeBox;
+    Map<String, Tab> tabsOpened = new HashMap<>();
+    Map<String, ChatBoxController> tabsControllers = new HashMap<>();
 
     @FXML
     private ListView listeMsg;
@@ -98,14 +113,23 @@ public class ConversationController implements Initializable {
     private TableColumn<User, String> origine;
     String muser = "";
     Integer i;
-
+    Integer x;
+    
+    MessageService ms = new MessageService();
     ConversationService cs = new ConversationService();
     UserService us = new UserService();
     User owner = new User();
     public ObservableList<Conversation> list = FXCollections.observableArrayList();
     public ObservableList<User> listu = FXCollections.observableArrayList();
+    public ObservableList<Message> listm = FXCollections.observableArrayList();
+    ArrayList<String> listm2 = new ArrayList<>();
     PreparedStatement pst = null;
     ResultSet rs = null;
+    User userloged = null;
+    int userloggedid;
+    String nomconv = "";
+    String sendr="";
+    
     Connection cnx2;
 
     public ConversationController() {
@@ -113,8 +137,13 @@ public class ConversationController implements Initializable {
     }
 
     void setdata(String mail) {
+        
+        
         lblmail.setText(mail);
         muser = lblmail.getText();
+        userloged = us.findBymail(muser);
+        userloggedid = userloged.getId();
+        
     }
 
     public void getlisteconv() {
@@ -186,9 +215,50 @@ public class ConversationController implements Initializable {
                 }
             }
         });
+         MenuItem item3 = new MenuItem("Open");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Conversation conv = (Conversation) tableconv.getSelectionModel().getSelectedItem();
+                    String re = "select * FROM conversation where id=?";
+                     pst = cnx2.prepareStatement(re);
+                     pst.setInt(1, conv.getId());
+                     
+                     rs = pst.executeQuery();
+                      while (rs.next()) {
+                     nomconv = rs.getString("nom");
+                     x = rs.getInt("id");
+                     //System.out.println(nomconv+" "+x);
+                     
+                         listm.addAll((ms.getallmsg(x,userloggedid)));
+                          
+                          //
+                         for (Message mmm : listm) {
+                         sendr = us.searchByid(mmm.getUsermsg());
+                         String mesg = "> " + sendr + " : " + mmm.getMessage() + " a " + mmm.getDtmsg();
+                         //System.out.println(""+mesg+" ");
+                         listm2.add(mesg);
+                         }
+                    
+                         
+                 
+                     
+                     cellClickAction(nomconv);
+                     listm.clear();
+                  
+                    label.setText("Select Menu Item 3");
+            }
+                    
+                } catch (Exception ex) {
+                    Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
 
         // Add MenuItem 
-        contextMenu.getItems().addAll(item1, item2);
+        contextMenu.getItems().addAll(item3,item1, item2);
 
         // When user right-click 
         tableconv.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
@@ -203,6 +273,7 @@ public class ConversationController implements Initializable {
     }
 
     public void getonlineusers() {
+     
         tableconv.getItems().clear();
         tableuser.getItems().clear();
         listu.addAll(us.getAllUsers());
@@ -290,16 +361,17 @@ public class ConversationController implements Initializable {
     @FXML
     private void homeAction(ActionEvent event) {
         try {
-
             Stage stage = (Stage) menubar.getScene().getWindow();
-            Parent parent = FXMLLoader.load(getClass().getResource("menubar.fxml"));
-
-            stage.setTitle("Tunisain Got Talent");
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("menubar.fxml"));
+            Parent parent = loader.load();
+            MenubarController m = loader.getController();
+            m.setMail(muser);
+             
             Scene scene = new Scene(parent);
-            // scene.getStylesheets().add(getClass().getResource("conv.css").toExternalForm());
             stage.setScene(scene);
+            stage.setTitle("Tunisain Got Talent");
             stage.show();
+       
             ((Node) (event.getSource())).getScene().getWindow().hide();
 
         } catch (IOException ex) {
@@ -413,23 +485,26 @@ public class ConversationController implements Initializable {
         }
     }
 
-    public void addconv(ActionEvent event) {
+
+        @FXML
+    private void addconv(MouseEvent event) {
         try {
-
-            Stage stage = (Stage) menubar.getScene().getWindow();
-            Parent parent = FXMLLoader.load(getClass().getResource("GroupScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GroupScene.fxml"));
+            Parent parent = loader.load();
+            GroupSceneController gr = loader.getController();
+            gr.setdata2(userloggedid);
+            Stage stage = new Stage();
             Scene scene = new Scene(parent);
-            stage.setTitle("New conversation");
-
             stage.setScene(scene);
+            stage.setTitle("Create New conversation");
             stage.show();
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
+    
+    
     /**
      * Initializes the controller class.
      *
@@ -440,6 +515,11 @@ public class ConversationController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         getonlineusers();
+        try {
+            homeBox.setContent(FXMLLoader.load(getClass().getResource("Map2.fxml")));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void logout(ActionEvent event) {
@@ -449,4 +529,51 @@ public class ConversationController implements Initializable {
         System.exit(0);
     }
 
+       void cellClickAction(String ConvName) {
+        if (!tabsOpened.containsKey(ConvName)) {
+            try {
+
+                
+                Tab newTab = new Tab();
+
+                newTab.setId(ConvName);
+                newTab.setText(ConvName);
+
+                newTab.setClosable(true);
+                newTab.setOnCloseRequest(new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+                        
+                        tabsOpened.remove(newTab.getId());
+                        tabsControllers.remove(newTab.getId());
+                    }
+                });
+
+                tabPane.getTabs().add(newTab);
+                tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+                
+                    
+                
+                
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatBox.fxml"));
+                ChatBoxController chatBoxController = new ChatBoxController(); 
+                loader.setController(chatBoxController);
+                
+                chatBoxController.setmessage(listm2,x,userloggedid);
+                listm2.clear();
+                        
+                
+        
+                tabsOpened.put(ConvName, newTab);
+                tabsControllers.put(ConvName, chatBoxController);
+
+                newTab.setContent(loader.load());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            tabPane.getSelectionModel().select(tabsOpened.get(ConvName));
+        }
+    }
+    
 }

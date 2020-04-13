@@ -58,6 +58,9 @@ public class Message implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
+    private Integer usermsg;
+    private Date dtmsg;
+    private Integer cvid;
 
     public Message() {
     }
@@ -66,11 +69,33 @@ public class Message implements Serializable {
         this.idM = idM;
     }
 
+    public Message(Integer idM, String message, Date createdAt) {
+        this.idM = idM;
+        this.message = message;
+        this.createdAt = createdAt;
+    }
+
     public Message(String message, Date createdAt, User userId) {
         this.message = message;
         this.createdAt = createdAt;
         this.userId = userId;
     }
+
+    public Message(String message, Integer usermsg, Date dtmsg) {
+        this.message = message;
+        this.usermsg = usermsg;
+        this.dtmsg = dtmsg;
+    }
+     public Message(String message, Date dtmsg, Integer cvid, Integer usermsg) {
+        this.message = message;
+       
+        this.dtmsg = dtmsg;
+        this.cvid = cvid;
+        this.usermsg = usermsg;
+    }
+    
+
+  
 
     
     public Message(Integer idM, String message) {
@@ -145,6 +170,14 @@ public class Message implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public Integer getCvid() {
+        return cvid;
+    }
+
+    public void setCvid(Integer cvid) {
+        this.cvid = cvid;
+    }
+
     public Conversation getConversationId() {
         return conversationId;
     }
@@ -161,6 +194,26 @@ public class Message implements Serializable {
         this.userId = userId;
     }
 
+    public Integer getUsermsg() {
+        return usermsg;
+    }
+
+    public void setUsermsg(Integer usermsg) {
+        this.usermsg = usermsg;
+    }
+
+    public Date getDtmsg() {
+        return dtmsg;
+    }
+
+    public void setDtmsg(Date dtmsg) {
+        this.dtmsg = dtmsg;
+    }
+
+   
+   
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

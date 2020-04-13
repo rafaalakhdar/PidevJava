@@ -68,6 +68,17 @@ public class Conversation implements Serializable {
         this.id = id;
     }
 
+    public Conversation(String nom, Date dateCreation, Collection<User> userCollection) {
+        this.nom = nom;
+        this.dateCreation = dateCreation;
+        this.userCollection = userCollection;
+    }
+
+    public Conversation(String nom) {
+        this.nom = nom;
+    }
+    
+
     public Conversation(Integer id, String nom, Date dateCreation) {
         this.id = id;
         this.nom = nom;

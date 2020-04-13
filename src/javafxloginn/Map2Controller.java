@@ -13,15 +13,18 @@ import com.lynden.gmapsfx.service.directions.*;
 import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
+import entities.Etablissement;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import services.ListEtablissement;
 
 /**
  * FXML Controller class
@@ -40,6 +43,7 @@ public class Map2Controller implements Initializable, MapComponentInitializedLis
     private GoogleMap map;
     
     private GeocodingService geocodingService;
+    private ObservableList<Etablissement> data;
 
     private StringProperty address = new SimpleStringProperty();
     
@@ -59,7 +63,7 @@ public class Map2Controller implements Initializable, MapComponentInitializedLis
         geocodingService = new GeocodingService();
         MapOptions mapOptions = new MapOptions();
         
-        mapOptions.center(new LatLong(47.6097, -122.3331))
+        mapOptions.center(new LatLong(36.80040, 10.18662))
                 .mapType(MapTypeIdEnum.ROADMAP)
                 .overviewMapControl(false)
                 .panControl(false)
@@ -67,9 +71,23 @@ public class Map2Controller implements Initializable, MapComponentInitializedLis
                 .scaleControl(false)
                 .streetViewControl(false)
                 .zoomControl(false)
-                .zoom(12);
+                .zoom(8);
 
         map = mapView.createMap(mapOptions);
+        
+        ListEtablissement LDS = new ListEtablissement();
+        data = LDS.ListEtab();
+                for (Etablissement etab : data)
+         {
+            
+            MarkerOptions markerOptionss = new MarkerOptions();
+ 
+            markerOptionss.position(new LatLong(etab.getLatitude(),etab.getLongitude()))
+                    .visible(Boolean.TRUE).label(" TGT : " +etab.getName());
+            //System.out.println(""+etab.getName());
+            Marker markers = new Marker(markerOptionss);
+            map.addMarker(markers);
+         }
         
     }
     

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -35,61 +33,21 @@
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <Label fx:id="nomconv" prefHeight="31.0" prefWidth="156.0" translateX="170.0">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="dateconv" prefHeight="31.0" prefWidth="158.0" translateX="190.0">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Label>
+                  <ImageView fx:id="iconCreateGroup" fitHeight="54.0" fitWidth="76.0" onMouseClicked="#addconv" pickOnBounds="true" translateX="540.0" translateY="-2.0">
+                     <image>
+                        <Image url="@../img/group.png" />
+                     </image>
+                     <effect>
+                        <SepiaTone level="0.65">
+                           <input>
+                              <DropShadow color="#464444" height="55.21" radius="34.1025" spread="0.85" width="83.2" />
+                           </input>
+                        </SepiaTone>
+                     </effect>
+                  </ImageView>
                </children>
             </HBox>
          </top>
-         <center>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <ListView fx:id="listeMsg" prefHeight="526.0" prefWidth="663.0" />
-                  <ScrollBar orientation="VERTICAL" />
-               </children>
-            </HBox>
-         </center>
-         <bottom>
-            <HBox prefHeight="64.0" prefWidth="898.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="btn1" mnemonicParsing="false" onAction="#addpdf" prefHeight="41.0" prefWidth="56.0" translateX="220.0" translateY="15.0">
-                                           <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@/img/export.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                  <Button fx:id="btn2" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#addimage" prefHeight="41.0" prefWidth="54.0" translateX="230.0" translateY="15.0">
-                                           <graphic>
-                        <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@/img/image.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                  <TextArea prefHeight="67.0" prefWidth="330.0" promptText="Entrer messages ..." translateX="250.0" />
-                  <Button mnemonicParsing="false" translateX="255.0" translateY="8.0">
-                      <graphic>
-                        <ImageView fitHeight="41.0" fitWidth="81.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@/img/sendm.png" />
-            </image>
-        </ImageView>
-            </graphic>
-        </Button>
-               </children>
-            </HBox>
-         </bottom>
          <left>
             <VBox prefHeight="453.0" prefWidth="250.0" BorderPane.alignment="CENTER">
                <children>
@@ -102,7 +60,7 @@
                           <content>
                             <AnchorPane>
                                  <children>
-                                    <TableView fx:id="tableuser" layoutX="2.0" layoutY="-2.0" prefHeight="374.0" prefWidth="256.0">
+                                    <TableView fx:id="tableuser" layoutX="2.0" layoutY="-2.0" prefHeight="428.0" prefWidth="256.0">
                                       <columns>
                                           <TableColumn fx:id="idu" prefWidth="20.0" text="id" />
                                         <TableColumn fx:id="name" prefWidth="115.0" text="nom" />
@@ -132,14 +90,24 @@
                </children>
             </VBox>
          </left>
+         <center>
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+               <tabs>
+                  <Tab fx:id="homeBox" closable="false" text="home">
+                     <content>
+                        <ListView fx:id="listeMsg" prefHeight="526.0" prefWidth="663.0" />
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </center>
       </BorderPane>
       <MenuBar fx:id="menubar" prefHeight="34.0" prefWidth="898.0">
          <menus>
             <Menu mnemonicParsing="false" text="Acceuil">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#addconv" text="New conversation" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#homeAction" text="Home page" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
                </items>
             </Menu>
