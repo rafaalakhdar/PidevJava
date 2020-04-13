@@ -75,13 +75,10 @@ import utilitez.MyConnection;
  */
 public class ConversationController implements Initializable {
 
- 
     @FXML
     private MenuBar menubar;
     @FXML
     private TabPane tabPane;
-
-
 
     @FXML
     private Label lblmail;
@@ -114,7 +111,7 @@ public class ConversationController implements Initializable {
     String muser = "";
     Integer i;
     Integer x;
-    
+
     MessageService ms = new MessageService();
     ConversationService cs = new ConversationService();
     UserService us = new UserService();
@@ -128,8 +125,8 @@ public class ConversationController implements Initializable {
     User userloged = null;
     int userloggedid;
     String nomconv = "";
-    String sendr="";
-    
+    String sendr = "";
+
     Connection cnx2;
 
     public ConversationController() {
@@ -137,13 +134,12 @@ public class ConversationController implements Initializable {
     }
 
     void setdata(String mail) {
-        
-        
+
         lblmail.setText(mail);
         muser = lblmail.getText();
         userloged = us.findBymail(muser);
         userloggedid = userloged.getId();
-        
+
     }
 
     public void getlisteconv() {
@@ -215,7 +211,7 @@ public class ConversationController implements Initializable {
                 }
             }
         });
-         MenuItem item3 = new MenuItem("Open");
+        MenuItem item3 = new MenuItem("Open");
         item3.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -223,34 +219,31 @@ public class ConversationController implements Initializable {
                 try {
                     Conversation conv = (Conversation) tableconv.getSelectionModel().getSelectedItem();
                     String re = "select * FROM conversation where id=?";
-                     pst = cnx2.prepareStatement(re);
-                     pst.setInt(1, conv.getId());
-                     
-                     rs = pst.executeQuery();
-                      while (rs.next()) {
-                     nomconv = rs.getString("nom");
-                     x = rs.getInt("id");
-                     //System.out.println(nomconv+" "+x);
-                     
-                         listm.addAll((ms.getallmsg(x,userloggedid)));
-                          
-                          //
-                         for (Message mmm : listm) {
-                         sendr = us.searchByid(mmm.getUsermsg());
-                         String mesg = "> " + sendr + " : " + mmm.getMessage() + " a " + mmm.getDtmsg();
-                         //System.out.println(""+mesg+" ");
-                         listm2.add(mesg);
-                         }
-                    
-                         
-                 
-                     
-                     cellClickAction(nomconv);
-                     listm.clear();
-                  
-                    label.setText("Select Menu Item 3");
-            }
-                    
+                    pst = cnx2.prepareStatement(re);
+                    pst.setInt(1, conv.getId());
+
+                    rs = pst.executeQuery();
+                    while (rs.next()) {
+                        nomconv = rs.getString("nom");
+                        x = rs.getInt("id");
+                        //System.out.println(nomconv+" "+x);
+
+                        listm.addAll((ms.getallmsg(x, userloggedid)));
+
+                        //
+                        for (Message mmm : listm) {
+                            sendr = us.searchByid(mmm.getUsermsg());
+                            String mesg = ">>> " + sendr + " : " + mmm.getMessage() + " à " + mmm.getDtmsg();
+                            //System.out.println(""+mesg+" ");
+                            listm2.add(mesg);
+                        }
+
+                        cellClickAction(nomconv);
+                        listm.clear();
+
+                        label.setText("Select Menu Item 3");
+                    }
+
                 } catch (Exception ex) {
                     Logger.getLogger(MessageController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -258,7 +251,7 @@ public class ConversationController implements Initializable {
         });
 
         // Add MenuItem 
-        contextMenu.getItems().addAll(item3,item1, item2);
+        contextMenu.getItems().addAll(item3, item1, item2);
 
         // When user right-click 
         tableconv.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
@@ -273,7 +266,7 @@ public class ConversationController implements Initializable {
     }
 
     public void getonlineusers() {
-     
+
         tableconv.getItems().clear();
         tableuser.getItems().clear();
         listu.addAll(us.getAllUsers());
@@ -321,7 +314,7 @@ public class ConversationController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("UserInfoView.fxml"));
 
                     Parent root = loader.load();
-                    
+
                     Stage stage = new Stage();
                     stage.setTitle("Profil");
                     Scene scene = new Scene(root);
@@ -330,18 +323,16 @@ public class ConversationController implements Initializable {
                     i = u.getId();
                     UserInfoController iu = loader.getController();
                     iu.send(i);
-                    
+
                     stage.setScene(scene);
                     stage.show();
-                    
-                    
+
                     label.setText("Select Menu Item 1");
                 } catch (IOException ex) {
                     Logger.getLogger(ConversationController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
- 
 
         // Add MenuItem 
         contextMenu.getItems().addAll(item1);
@@ -366,12 +357,12 @@ public class ConversationController implements Initializable {
             Parent parent = loader.load();
             MenubarController m = loader.getController();
             m.setMail(muser);
-             
+
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.setTitle("Tunisain Got Talent");
             stage.show();
-       
+
             ((Node) (event.getSource())).getScene().getWindow().hide();
 
         } catch (IOException ex) {
@@ -412,20 +403,18 @@ public class ConversationController implements Initializable {
         getlisteconv();
     }
 
-    
-     public void editnomconv(String nom) throws Exception {
+    public void editnomconv(String nom) throws Exception {
         try {
 
             Conversation conv = (Conversation) tableconv.getSelectionModel().getSelectedItem();
-            String requete = "update conversation set nom='"+nom+"' where id=?";
+            String requete = "update conversation set nom='" + nom + "' where id=?";
             pst = cnx2.prepareStatement(requete);
             pst.setInt(1, conv.getId());
             pst.executeUpdate();
             ServiceNotification.showNotif("Sucsess", "Name Updated ");
 
-     
         } catch (SQLException e1) {
-            
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("erreur");
@@ -433,36 +422,6 @@ public class ConversationController implements Initializable {
         }
         tableconv.getItems().clear();
         getlisteconv();
-    }
-
-    public void addimage(ActionEvent event) {
-
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("images", "*.png", "*.jpg"));
-        List<File> selctedFiles = fc.showOpenMultipleDialog(null);
-
-        if (selctedFiles != null) {
-            for (int i = 0; i < selctedFiles.size(); i++) {
-                listeMsg.getItems().add(selctedFiles.get(i).getAbsolutePath());
-            }
-        } else {
-            System.out.println("file is not valid");
-        }
-    }
-
-    public void addpdf(ActionEvent event) {
-
-        FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Pdf", "*.pdf"));
-        List<File> selctedFiles = fc.showOpenMultipleDialog(null);
-
-        if (selctedFiles != null) {
-            for (int i = 0; i < selctedFiles.size(); i++) {
-                listeMsg.getItems().add(selctedFiles.get(i).getAbsolutePath());
-            }
-        } else {
-            System.out.println("file is not valid");
-        }
     }
 
     public void gotomail(ActionEvent event) {
@@ -485,8 +444,7 @@ public class ConversationController implements Initializable {
         }
     }
 
-
-        @FXML
+    @FXML
     private void addconv(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GroupScene.fxml"));
@@ -503,8 +461,6 @@ public class ConversationController implements Initializable {
         }
     }
 
-    
-    
     /**
      * Initializes the controller class.
      *
@@ -529,11 +485,10 @@ public class ConversationController implements Initializable {
         System.exit(0);
     }
 
-       void cellClickAction(String ConvName) {
+    void cellClickAction(String ConvName) {
         if (!tabsOpened.containsKey(ConvName)) {
             try {
 
-                
                 Tab newTab = new Tab();
 
                 newTab.setId(ConvName);
@@ -543,7 +498,7 @@ public class ConversationController implements Initializable {
                 newTab.setOnCloseRequest(new EventHandler<Event>() {
                     @Override
                     public void handle(Event event) {
-                        
+
                         tabsOpened.remove(newTab.getId());
                         tabsControllers.remove(newTab.getId());
                     }
@@ -551,19 +506,14 @@ public class ConversationController implements Initializable {
 
                 tabPane.getTabs().add(newTab);
                 tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
-                
-                    
-                
-                
-                 FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatBox.fxml"));
-                ChatBoxController chatBoxController = new ChatBoxController(); 
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ChatBox.fxml"));
+                ChatBoxController chatBoxController = new ChatBoxController();
                 loader.setController(chatBoxController);
-                
-                chatBoxController.setmessage(listm2,x,userloggedid);
+
+                chatBoxController.setmessage(listm2, x, userloggedid);
                 listm2.clear();
-                        
-                
-        
+
                 tabsOpened.put(ConvName, newTab);
                 tabsControllers.put(ConvName, chatBoxController);
 
@@ -575,5 +525,5 @@ public class ConversationController implements Initializable {
             tabPane.getSelectionModel().select(tabsOpened.get(ConvName));
         }
     }
-    
+
 }

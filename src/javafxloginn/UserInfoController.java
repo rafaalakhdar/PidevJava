@@ -37,11 +37,6 @@ public class UserInfoController implements Initializable {
 
     Integer idu;
 
-   
-
-  
-
-  
      void send(Integer id) {
          User user = new User();
         idu = id;

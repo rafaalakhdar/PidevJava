@@ -11,7 +11,7 @@
     <children>
         <ImageView fitHeight="150.0" fitWidth="84.0" layoutX="19.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@/img/pardefaut.jpg" />
+            <Image url="@/img/1211708.png" />
          </image>
         </ImageView>
         <Text id="lbEmail" fx:id="txtEmail" layoutX="220.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email@email.com" wrappingWidth="190.13671635836363" />

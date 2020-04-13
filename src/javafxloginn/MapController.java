@@ -29,6 +29,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -40,11 +43,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import org.json.simple.JSONArray;
 
@@ -52,6 +57,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import services.ListEtablissement;
+import tray.animations.AnimationType;
+import static tray.notification.NotificationType.SUCCESS;
+import tray.notification.TrayNotification;
+import utilitez.MyConnection;
 
 public class MapController implements Initializable {
 
@@ -64,6 +73,8 @@ public class MapController implements Initializable {
     private AnchorPane searchAP;
     private ObservableList<Etablissement> data;
     private String key;
+        Connection cnx2;
+
     
 
     public AnchorPane getSearchAP() {
@@ -96,7 +107,9 @@ public class MapController implements Initializable {
     public void setMap(GoogleMap map) {
         this.map = map;
     }
- 
+  public MapController() {
+        cnx2 = MyConnection.getInstance().getCnx();
+    }
 
     private DecimalFormat formatter = new DecimalFormat("###.00000");
     private GeocodingService geocodingService;
@@ -175,6 +188,7 @@ addresss.bind(address.textProperty());
                 Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 urlConnection.disconnect();
+                
                 System.out.println("Teeeeeeeessssssssssssst"+formattedAddress);
                 address.setText(formattedAddress);
                 
@@ -195,9 +209,12 @@ addresss.bind(address.textProperty());
          {
             
             MarkerOptions markerOptionss = new MarkerOptions();
- 
+       Label label= new Label();
+	label.setText(" TGT : " +etab.getName());
+	label.setStyle("-fx-font-size:20px;");
+        String m = label.getText();
             markerOptionss.position(new LatLong(etab.getLatitude(),etab.getLongitude()))
-                    .visible(Boolean.TRUE).label(" TGT : " +etab.getName());
+                    .visible(Boolean.TRUE).label(m);
             //System.out.println(""+etab.getName());
             Marker markers = new Marker(markerOptionss);
             map.addMarker(markers);
@@ -252,6 +269,22 @@ addresss.bind(address.textProperty());
 
     @FXML
     private void addposition(ActionEvent event) throws IOException {
+        String d =  "Adresse Talent " +  address.getText();
+        String lat = latitudeLabel.getText().replaceAll(",",".");
+        String log = longitudeLabel.getText().replaceAll(",",".");
+       // System.out.println(d + " " + address.getText() + " " + lat + " " + log);
+        try {
+            String requete3 = "insert into etablissement (name,address,latitude,longitude) values('" + d + "','" + address.getText() + "','" + lat + "','" + log + "')";
+            Statement st3 = cnx2.createStatement();
+            st3.executeUpdate(requete3);
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+            TrayNotification tray = new TrayNotification("Sucsess", "Adresse Enregistré ", SUCCESS);
+            tray.setAnimationType(AnimationType.POPUP);
+            tray.showAndDismiss(Duration.seconds(2));
+            System.out.println(" adress ajouté");
+        } catch (SQLException ex) {
+            Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public TextField getLatitudeLabel() {

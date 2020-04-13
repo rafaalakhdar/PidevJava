@@ -54,7 +54,7 @@ public class Map2Controller implements Initializable, MapComponentInitializedLis
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapView.addMapInializedListener(this);
-        address.bind(addressTextField.textProperty());
+        //address.bind(addressTextField.textProperty());
     }    
     
     

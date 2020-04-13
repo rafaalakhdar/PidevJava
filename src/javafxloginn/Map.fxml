@@ -18,7 +18,7 @@
                   <Font name="Comic Sans MS Bold" size="12.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="address" labelFloat="true" layoutX="14.0" layoutY="12.0" onAction="#search" prefHeight="25.0" prefWidth="196.0" promptText="Votre adresse .." />
+            <JFXTextField fx:id="address" labelFloat="true" layoutX="14.0" layoutY="12.0" prefHeight="25.0" prefWidth="196.0" promptText="Votre Nom.." />
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="432.0" layoutY="15.0" text="Longitude :">
                <font>
                   <Font name="Comic Sans MS Bold" size="12.0" />

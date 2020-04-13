@@ -18,17 +18,16 @@ import javafx.stage.Stage;
 import services.MessageService;
 import utilitez.MyConnection;
 
-
 /**
  *
  * @author Rafaa
  */
 public class JavaFXloginn extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
+
         Scene scene = new Scene(root, 618, 500);
         stage.setTitle("Login TGT");
         stage.setScene(scene);
@@ -39,13 +38,8 @@ public class JavaFXloginn extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
-            //   Message m1 = new Message(44,"helo again","D:\\aaa\\150.jpg" ,dd ,c ,u);
-               MessageService ms = new MessageService();
-            //   ms.ajoutermsg(m1);
 
         launch(args);
     }
-    
-    
+
 }

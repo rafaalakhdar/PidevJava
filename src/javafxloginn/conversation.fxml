@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.image.Image?>
@@ -28,7 +29,7 @@
          <top>
             <HBox prefHeight="40.0" prefWidth="898.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lblmail" layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="220.0" underline="true">
+                  <Label fx:id="lblmail" layoutX="10.0" layoutY="10.0" prefHeight="31.0" prefWidth="220.0" translateX="15.0" underline="true">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -46,13 +47,20 @@
                      </effect>
                   </ImageView>
                </children>
+               <effect>
+                  <ColorAdjust brightness="0.21" contrast="0.27" hue="0.24" saturation="0.34">
+                     <input>
+                        <DropShadow />
+                     </input>
+                  </ColorAdjust>
+               </effect>
             </HBox>
          </top>
          <left>
             <VBox prefHeight="453.0" prefWidth="250.0" BorderPane.alignment="CENTER">
                <children>
                   <Line endX="92.22181701660156" endY="-19.832056045532227" layoutX="-80.0" layoutY="63.0" startX="343.51470947265625" startY="-19.83213233947754" strokeWidth="3.0" />
-                  <TextField fx:id="searchfield" promptText="chercher Conversation..." />
+                  <TextField fx:id="searchfield" promptText="chercher ..." />
                   <Line endX="92.22181701660156" endY="-19.832056045532227" startX="343.51470947265625" startY="-19.83213233947754" strokeWidth="3.0" />
                   <TabPane>
                      <tabs>
@@ -62,9 +70,9 @@
                                  <children>
                                     <TableView fx:id="tableuser" layoutX="2.0" layoutY="-2.0" prefHeight="428.0" prefWidth="256.0">
                                       <columns>
-                                          <TableColumn fx:id="idu" prefWidth="20.0" text="id" />
-                                        <TableColumn fx:id="name" prefWidth="115.0" text="nom" />
-                                        <TableColumn fx:id="origine" prefWidth="120.0" text="origine" />
+                                          <TableColumn fx:id="idu" minWidth="0.0" prefWidth="0.0" text="id" />
+                                        <TableColumn fx:id="name" prefWidth="135.0" text="nom" />
+                                        <TableColumn fx:id="origine" prefWidth="120.0" text="Sexe" />
                                       </columns>
                                     </TableView>
                                  </children>
