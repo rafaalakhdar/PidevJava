@@ -58,11 +58,7 @@ public class MessageController implements Initializable {
     private TableColumn<Message, String> image;
     @FXML
     private TableColumn<Message, Date> date;
-    @FXML
-    private TableColumn<Message, Integer> idconv;
-    
-    @FXML
-    private TableColumn<Message, Integer> iduser;
+
    
 
     PreparedStatement pst = null;
@@ -90,8 +86,7 @@ public class MessageController implements Initializable {
                 list.add(new Message(rs.getInt(2), rs.getString(3),
                         rs.getString(4),
                         rs.getDate(5)
-                        //rs.getArray(5),
-                        //rs.getObject(1,Conversation.class)
+                  
                 ));
 
             }
@@ -106,8 +101,7 @@ public class MessageController implements Initializable {
         message.setCellValueFactory(new PropertyValueFactory<>("message"));
         image.setCellValueFactory(new PropertyValueFactory<>("image"));
         date.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
-        //idconv.setCellValueFactory(new PropertyValueFactory<>("conversationId"));
-        iduser.setCellValueFactory(new PropertyValueFactory<>("userId"));
+  
      
 
         table.setItems(list);

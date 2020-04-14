@@ -218,7 +218,7 @@ public class FXMLDocumentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Erreur Fields");
             alert.setHeaderText(null);
-            alert.setContentText(" Fields empty");
+            alert.setContentText(" Champs Vide");
             alert.showAndWait();
             indicator.setVisible(false);
 
@@ -236,7 +236,7 @@ public class FXMLDocumentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Erreur Email");
             alert.setHeaderText(null);
-            alert.setContentText("invalide Email");
+            alert.setContentText("Email invalide ou vide");
             alert.showAndWait();
             indicator.setVisible(false);
 

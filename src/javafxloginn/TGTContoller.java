@@ -51,7 +51,7 @@ public class TGTContoller implements Initializable {
 
         TreeItem<String> root = new TreeItem<>("Gestion Tunisian Got Talent", new ImageView(icon2));
         //TreeItem<String> conv = new TreeItem<>("Conversation", new ImageView(icon));
-        TreeItem<String> mail = new TreeItem<>("Reclamer une conversation", new ImageView(icon));
+        TreeItem<String> mail = new TreeItem<>("Envoyer une Reclamer", new ImageView(icon));
 
         TreeItem<String> shop = new TreeItem<>("Shop", new ImageView(icon));
 
@@ -108,7 +108,7 @@ public class TGTContoller implements Initializable {
             stage.show();
 
             //((Node) (mouse.getSource())).getScene().getWindow().hide();
-        } else if (item.getValue().equals("Reclamer une conversation")) {
+        } else if (item.getValue().equals("Envoyer une Reclamer")) {
 
             //System.out.println("nono");
             Stage stage = new Stage();

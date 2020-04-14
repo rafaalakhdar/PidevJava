@@ -38,6 +38,7 @@ import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.util.Duration;
+import services.ServiceNotification;
 import services.UserService;
 import tray.animations.AnimationType;
 import static tray.notification.NotificationType.SUCCESS;
@@ -148,11 +149,15 @@ public class TableController implements Initializable {
                 //System.out.println(x.getValue());
 
                 String to = x.getValue();
+                ServiceNotification.showNotif("patienter ", "Reclamation en cours d'envoi >> ... ");
                 String subject = "Reclamation Admin TGT";
-                String message = " Vous avez recu cette Reclamation From service reclamation de notre application\na cause d'une mauvaise utilisation de la conversation au cours du Chat ";
+                String message = " Vous avez recu cette Reclamation From service reclamation de notre application \nA cause d'une mauvaise utilisation de la conversation au cours du Chat. ";
                 String usermail = "rafaa.lakhdhar@esprit.tn";
                 String passmail = "191SMT4905";
                 Mailing.send(to, subject, message, usermail, passmail);
+                 TrayNotification tray = new TrayNotification("Reclamation", "L'utilisateur " + to + " Recu un Email ", SUCCESS);
+                    tray.setAnimationType(AnimationType.POPUP);
+                    tray.showAndDismiss(Duration.seconds(3));
             }
         });
         MenuItem item2 = new MenuItem("Delete");
@@ -192,7 +197,7 @@ public class TableController implements Initializable {
         });
 
         // Add MenuItem 
-        contextMenu.getItems().addAll(item1, item2, item3);
+        contextMenu.getItems().addAll(item1, item3, item2);
 
         // When user right-click 
         table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {

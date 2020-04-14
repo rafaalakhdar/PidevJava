@@ -5,10 +5,11 @@
 <?import com.lynden.gmapsfx.GoogleMapView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="clear" prefHeight="579.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.MapController">
+<AnchorPane id="AnchorPane" fx:id="clear" prefHeight="579.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.MapController">
     <children>
       <GoogleMapView fx:id="googleMapView" layoutX="14.0" layoutY="85.0" prefHeight="485.0" prefWidth="680.0" />
       <AnchorPane fx:id="searchAP" layoutX="14.0" layoutY="19.0" prefHeight="47.0" prefWidth="680.0" style="-fx-background-color: D8D8D8;">
@@ -24,10 +25,13 @@
                   <Font name="Comic Sans MS Bold" size="12.0" />
                </font>
             </Label>
-            <JFXButton fx:id="save" layoutX="587.0" layoutY="11.0" onAction="#addposition" style="-fx-background-color: ff214f; -fx-text-fill: white;" text="Enregistrer" />
+            <JFXButton fx:id="save" buttonType="RAISED" layoutX="587.0" layoutY="11.0" onAction="#addposition" style="-fx-background-color: ff214f; -fx-text-fill: white;" text="Enregistrer" />
             <TextField fx:id="latitudeLabel" layoutX="307.0" layoutY="9.0" prefHeight="31.0" prefWidth="120.0" />
             <TextField fx:id="longitudeLabel" layoutX="489.0" layoutY="9.0" prefHeight="31.0" prefWidth="92.0" />
          </children>
+         <effect>
+            <Reflection />
+         </effect>
       </AnchorPane>
     </children>
 </AnchorPane>
