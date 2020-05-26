@@ -5,7 +5,6 @@
  */
 package javafxloginn;
 
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.lynden.gmapsfx.GoogleMapView;
@@ -21,7 +20,6 @@ import com.lynden.gmapsfx.service.geocoding.GeocoderStatus;
 import com.lynden.gmapsfx.service.geocoding.GeocodingResult;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import entities.Etablissement;
-import entities.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,7 +54,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import services.ListEtablissement;
+import services.AdresseService;
+import services.UserService;
 import tray.animations.AnimationType;
 import static tray.notification.NotificationType.SUCCESS;
 import tray.notification.TrayNotification;
@@ -66,16 +65,14 @@ public class MapController implements Initializable {
 
     @FXML
     private TextField latitudeLabel;
-
+    String nomu = "";
     @FXML
     private TextField longitudeLabel;
     @FXML
     private AnchorPane searchAP;
     private ObservableList<Etablissement> data;
     private String key;
-        Connection cnx2;
-
-    
+    Connection cnx2;
 
     public AnchorPane getSearchAP() {
         return searchAP;
@@ -84,7 +81,7 @@ public class MapController implements Initializable {
     public void setSearchAP(AnchorPane searchAP) {
         this.searchAP = searchAP;
     }
-    private StringProperty addresss = new SimpleStringProperty();
+    /*  private StringProperty addresss = new SimpleStringProperty();
 
     public TextField getAddress() {
         return address;
@@ -92,11 +89,11 @@ public class MapController implements Initializable {
 
     public void setAddress(TextField address) {
         this.address = address;
-    }
+    }*/
 
     @FXML
-    private GoogleMapView googleMapView ;
-     //protected GoogleMapView mapView = new GoogleMapView("de-DE", "AIzaSyA0fIjA3jrfnuxAdhkrEoSlFhenvUOULH8");
+    private GoogleMapView googleMapView;
+    //protected GoogleMapView mapView = new GoogleMapView("de-DE", "AIzaSyA0fIjA3jrfnuxAdhkrEoSlFhenvUOULH8");
 
     private GoogleMap map;
 
@@ -104,17 +101,23 @@ public class MapController implements Initializable {
         return map;
     }
 
+    void setNom(String nom) {
+
+        nomu = nom;
+
+    }
+
     public void setMap(GoogleMap map) {
         this.map = map;
     }
-  public MapController() {
+
+    public MapController() {
         cnx2 = MyConnection.getInstance().getCnx();
     }
 
     private DecimalFormat formatter = new DecimalFormat("###.00000");
     private GeocodingService geocodingService;
-    @FXML
-    private TextField address;
+
     @FXML
     private AnchorPane clear;
     @FXML
@@ -123,18 +126,18 @@ public class MapController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-addresss.bind(address.textProperty());
+//addresss.bind(address.textProperty());
         googleMapView.addMapInializedListener(() -> {
             try {
                 configureMap();
-                
-                
+
             } catch (IOException ex) {
                 Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
-        public void setKey(String key) {
+
+    public void setKey(String key) {
         this.key = key;
     }
 
@@ -148,54 +151,54 @@ addresss.bind(address.textProperty());
         map = googleMapView.createMap(mapOptions, false);
         MarkerOptions markerOptions = new MarkerOptions();
         map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
-        try {
-            LatLong latLong = event.getLatLong();
-            latitudeLabel.setText(formatter.format(latLong.getLatitude()));
-            longitudeLabel.setText(formatter.format(latLong.getLongitude()));
-
-            markerOptions.position(latLong)
-                    .visible(Boolean.TRUE)
-                    .title("My Marker");
-
-            Marker marker = new Marker(markerOptions);
-            map.clearMarkers();
-            map.addMarker(marker);
-            ///
-            URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitudeLabel.getText().replace(',','.')+","+longitudeLabel.getText().replace(',', '.')+"&sensor=true&key=AIzaSyA0fIjA3jrfnuxAdhkrEoSlFhenvUOULH8");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            String formattedAddress = "";
-            
             try {
-                InputStream in = url.openStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String result, line = reader.readLine();
-                result = line;
-                while ((line = reader.readLine()) != null) {
-                    result += line;
+                LatLong latLong = event.getLatLong();
+                latitudeLabel.setText(formatter.format(latLong.getLatitude()));
+                longitudeLabel.setText(formatter.format(latLong.getLongitude()));
+
+                markerOptions.position(latLong)
+                        .visible(Boolean.TRUE)
+                        .title("My Marker");
+
+                Marker marker = new Marker(markerOptions);
+                map.clearMarkers();
+                map.addMarker(marker);
+                ///
+                URL url = new URL("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitudeLabel.getText().replace(',', '.') + "," + longitudeLabel.getText().replace(',', '.') + "&sensor=true&key=AIzaSyA0fIjA3jrfnuxAdhkrEoSlFhenvUOULH8");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                String formattedAddress = "";
+
+                try {
+                    InputStream in = url.openStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                    String result, line = reader.readLine();
+                    result = line;
+                    while ((line = reader.readLine()) != null) {
+                        result += line;
+                    }
+
+                    JSONParser parser = new JSONParser();
+                    JSONObject rsp = (JSONObject) parser.parse(result);
+
+                    if (rsp.containsKey("results")) {
+                        JSONArray matches = (JSONArray) rsp.get("results");
+                        JSONObject data = (JSONObject) matches.get(0); //TODO: check if idx=0 exists
+                        formattedAddress = (String) data.get("formatted_address");
+                    }
+
+                    adresseX.setText("");
+                } catch (ParseException ex) {
+                    Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    urlConnection.disconnect();
+
+                    System.out.println("Teeeeeeeessssssssssssst" + formattedAddress);
+                    // address.setText(formattedAddress);
+
                 }
-                
-                JSONParser parser = new JSONParser();
-                JSONObject rsp = (JSONObject) parser.parse(result);
-                
-                if (rsp.containsKey("results")) {
-                    JSONArray matches = (JSONArray) rsp.get("results");
-                    JSONObject data = (JSONObject) matches.get(0); //TODO: check if idx=0 exists
-                    formattedAddress = (String) data.get("formatted_address");
-                }
-                
-                adresseX.setText("");
-            } catch (ParseException ex) {
-                Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                urlConnection.disconnect();
-                
-                System.out.println("Teeeeeeeessssssssssssst"+formattedAddress);
-                address.setText(formattedAddress);
-                
-            }
-            ///
-            
-        }   catch (MalformedURLException ex) {
+                ///
+
+            } catch (MalformedURLException ex) {
                 Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(MapController.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,34 +206,29 @@ addresss.bind(address.textProperty());
             ///
 
         });
-        ListEtablissement LDS = new ListEtablissement();
+        AdresseService LDS = new AdresseService();
         data = LDS.ListEtab();
-                for (Etablissement etab : data)
-         {
-            
+        for (Etablissement etab : data) {
+
             MarkerOptions markerOptionss = new MarkerOptions();
-       Label label= new Label();
-	label.setText(" TGT : " +etab.getName());
-	label.setStyle("-fx-font-size:20px;");
-        String m = label.getText();
-            markerOptionss.position(new LatLong(etab.getLatitude(),etab.getLongitude()))
+            Label label = new Label();
+            label.setText(" TGT : " + etab.getName());
+            label.setStyle("-fx-font-size:20px;");
+            String m = label.getText();
+            markerOptionss.position(new LatLong(etab.getLatitude(), etab.getLongitude()))
                     .visible(Boolean.TRUE).label(m);
             //System.out.println(""+etab.getName());
             Marker markers = new Marker(markerOptionss);
             map.addMarker(markers);
-         }
+        }
 //         clear.setOnMouseClicked((MouseEvent event) -> {
 //             
 //         map.clearMarkers();
 //         });
-         
 
-  
     }
 
-    
-    
-    @FXML
+    /*   @FXML
     private void search(ActionEvent event) throws IOException {
 
         geocodingService = new GeocodingService();
@@ -265,16 +263,15 @@ addresss.bind(address.textProperty());
 
         });
 
-    }
-
+    }*/
     @FXML
     private void addposition(ActionEvent event) throws IOException {
-        String d =  "Adresse Talent " +  address.getText();
-        String lat = latitudeLabel.getText().replaceAll(",",".");
-        String log = longitudeLabel.getText().replaceAll(",",".");
-       // System.out.println(d + " " + address.getText() + " " + lat + " " + log);
+        String d = "Adresse Talent " + nomu.toUpperCase();
+        String lat = latitudeLabel.getText().replaceAll(",", ".");
+        String log = longitudeLabel.getText().replaceAll(",", ".");
+        // System.out.println(d + " " + address.getText() + " " + lat + " " + log);
         try {
-            String requete3 = "insert into etablissement (name,address,latitude,longitude) values('" + d + "','" + address.getText() + "','" + lat + "','" + log + "')";
+            String requete3 = "insert into etablissement (name,address,latitude,longitude) values('" + d + "','" + nomu.toUpperCase() + "','" + lat + "','" + log + "')";
             Statement st3 = cnx2.createStatement();
             st3.executeUpdate(requete3);
             ((Node) (event.getSource())).getScene().getWindow().hide();
@@ -302,10 +299,5 @@ addresss.bind(address.textProperty());
     public void setSave(JFXButton save) {
         this.save = save;
     }
-    public void listRestaurant() throws IOException
-    {
-      
-    }
- 
-   
+
 }

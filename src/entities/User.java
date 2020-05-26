@@ -5,130 +5,37 @@
  */
 package entities;
 
-import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import java.util.Date;
+import java.util.Objects;
 
 /**
  *
  * @author Rafaa
  */
-@Entity
-@Table(name = "user")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
-    , @NamedQuery(name = "User.findByNom", query = "SELECT u FROM User u WHERE u.nom = :nom")
-    , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
-    , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
-    , @NamedQuery(name = "User.findBySexe", query = "SELECT u FROM User u WHERE u.sexe = :sexe")
-    , @NamedQuery(name = "User.findByPays", query = "SELECT u FROM User u WHERE u.pays = :pays")
-    , @NamedQuery(name = "User.findByStatus", query = "SELECT u FROM User u WHERE u.status = :status")})
-public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @Column(name = "nom")
-    private String nom;
-    @Basic(optional = false)
-    @Column(name = "email")
+public class User {
+       private int id;
+    private String username;
+    private String username_canonical;
     private String email;
-    @Basic(optional = false)
-    @Column(name = "password")
+    private String email_canonical;
+    private int enabled;
+    private String salt;
     private String password;
-    @Basic(optional = false)
-    @Column(name = "sexe")
+    private Date last_login;
+    private String confirmation_token;
+    private Date password_requested_at;
+    private String roles;
     private String sexe;
-    @Basic(optional = false)
-    @Column(name = "pays")
     private String pays;
-    @Basic(optional = false)
-    @Column(name = "status")
     private String status;
-    @Basic(optional = false)
-    @Column(name = "enabled")
-     private int enabled;
-    @ManyToMany(mappedBy = "userCollection")
-    private Collection<Conversation> conversationCollection;
-    @OneToMany(mappedBy = "userId")
-    private Collection<Message> messageCollection;
+
 
     public User() {
     }
 
-    public User(Integer id) {
+    public User(int id, String username, String email, String password, String sexe, String pays, String status) {
         this.id = id;
-    }
-
-    public User(Integer id, String nom, String sexe) {
-        this.id = id;
-        this.nom = nom;
-        this.sexe = sexe;
-    }
-    
-
-    public User(Integer id, String nom, String email, String password, String sexe, String pays, String status, int enabled, Collection<Conversation> conversationCollection, Collection<Message> messageCollection) {
-        this.id = id;
-        this.nom = nom;
-        this.email = email;
-        this.password = password;
-        this.sexe = sexe;
-        this.pays = pays;
-        this.status = status;
-        this.enabled = enabled;
-        this.conversationCollection = conversationCollection;
-        this.messageCollection = messageCollection;
-    }
-
-    public User(Integer id, String nom, String email, int enabled) {
-        this.id = id;
-        this.nom = nom;
-        this.email = email;
-        this.enabled = enabled;
-    }
-
-    public User(String nom, String email, String password, String sexe, String pays) {
-        this.nom = nom;
-        this.email = email;
-        this.password = password;
-        this.sexe = sexe;
-        this.pays = pays;
-        
-    }
-
-    public User(Integer id, String nom, String email, String password, String sexe, String pays, String status, int enabled) {
-        this.id = id;
-        this.nom = nom;
-        this.email = email;
-        this.password = password;
-        this.sexe = sexe;
-        this.pays = pays;
-        this.status = status;
-        this.enabled = enabled;
-    }
-
-    
-    public User(Integer id, String nom, String email, String password, String sexe, String pays, String status) {
-        this.id = id;
-        this.nom = nom;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.sexe = sexe;
@@ -136,24 +43,102 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    public User(int aInt, String string, String string0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public User(int id, String username, String username_canonical, String email, String email_canonical, int enabled, String salt, String password, Date last_login, String confirmation_token, Date password_requested_at, String roles, String sexe, String pays, String status) {
+        this.id = id;
+        this.username = username;
+        this.username_canonical = username_canonical;
+        this.email = email;
+        this.email_canonical = email_canonical;
+        this.enabled = enabled;
+        this.salt = salt;
+        this.password = password;
+        this.last_login = last_login;
+        this.confirmation_token = confirmation_token;
+        this.password_requested_at = password_requested_at;
+        this.roles = roles;
+        this.sexe = sexe;
+        this.pays = pays;
+        this.status = status;
     }
 
-    public Integer getId() {
+    public User(int id, String username, String sexe) {
+        this.id = id;
+        this.username = username;
+        this.sexe = sexe;
+    }
+
+    public User(int id, String username, String email, int enabled) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.enabled = enabled;
+    }
+
+    public User(String username, String email, int enabled, String password, String pays) {
+        this.username = username;
+        this.email = email;
+        this.enabled = enabled;
+        this.password = password;
+        this.pays = pays;
+    }
+
+    public User(String username, String email, String password, String sexe, String pays, String status) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.sexe = sexe;
+        this.pays = pays;
+        this.status = status;
+    }
+
+    public User(String username, String email, String sexe, String pays, String status) {
+        this.username = username;
+        this.email = email;
+        this.sexe = sexe;
+        this.pays = pays;
+        this.status = status;
+    }
+
+
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername_canonical() {
+        return username_canonical;
+    }
+
+    public void setUsername_canonical(String username_canonical) {
+        this.username_canonical = username_canonical;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail_canonical() {
+        return email_canonical;
+    }
+
+    public void setEmail_canonical(String email_canonical) {
+        this.email_canonical = email_canonical;
     }
 
     public int getEnabled() {
@@ -164,13 +149,14 @@ public class User implements Serializable {
         this.enabled = enabled;
     }
 
-    
-    public String getEmail() {
-        return email;
+  
+
+    public String getSalt() {
+        return salt;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getPassword() {
@@ -179,6 +165,38 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getLast_login() {
+        return last_login;
+    }
+
+    public void setLast_login(Date last_login) {
+        this.last_login = last_login;
+    }
+
+    public String getConfirmation_token() {
+        return confirmation_token;
+    }
+
+    public void setConfirmation_token(String confirmation_token) {
+        this.confirmation_token = confirmation_token;
+    }
+
+    public Date getPassword_requested_at() {
+        return password_requested_at;
+    }
+
+    public void setPassword_requested_at(Date password_requested_at) {
+        this.password_requested_at = password_requested_at;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public String getSexe() {
@@ -205,47 +223,76 @@ public class User implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
-    public Collection<Conversation> getConversationCollection() {
-        return conversationCollection;
-    }
-
-    public void setConversationCollection(Collection<Conversation> conversationCollection) {
-        this.conversationCollection = conversationCollection;
-    }
-
-    @XmlTransient
-    public Collection<Message> getMessageCollection() {
-        return messageCollection;
-    }
-
-    public void setMessageCollection(Collection<Message> messageCollection) {
-        this.messageCollection = messageCollection;
+    @Override
+    public String toString() {
+        return "Users{" + "id=" + id + ", username=" + username + ", username_canonical=" + username_canonical + ", email=" + email + ", email_canonical=" + email_canonical + ", enabled=" + enabled + ", salt=" + salt + ", password=" + password + ", last_login=" + last_login + ", confirmation_token=" + confirmation_token + ", password_requested_at=" + password_requested_at + ", roles=" + roles + ", sexe=" + sexe + ", pays=" + pays + ", status=" + status + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        User other = (User) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.enabled != other.enabled) {
+            return false;
+        }
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.username_canonical, other.username_canonical)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.email_canonical, other.email_canonical)) {
+            return false;
+        }
+        if (!Objects.equals(this.salt, other.salt)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (!Objects.equals(this.confirmation_token, other.confirmation_token)) {
+            return false;
+        }
+        if (!Objects.equals(this.roles, other.roles)) {
+            return false;
+        }
+        if (!Objects.equals(this.sexe, other.sexe)) {
+            return false;
+        }
+        if (!Objects.equals(this.pays, other.pays)) {
+            return false;
+        }
+        if (!Objects.equals(this.status, other.status)) {
+            return false;
+        }
+        if (!Objects.equals(this.last_login, other.last_login)) {
+            return false;
+        }
+        if (!Objects.equals(this.password_requested_at, other.password_requested_at)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "entities.User[ id=" + id + " ]";
-    }
-    
+ 
 }

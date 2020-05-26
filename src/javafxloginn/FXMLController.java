@@ -6,7 +6,6 @@
 package javafxloginn;
 
 import entities.Conversation;
-import entities.User;
 import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
@@ -34,7 +33,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -52,15 +50,16 @@ import utilitez.MyConnection;
  * @author Rafaa
  */
 public class FXMLController implements Initializable {
+
     Connection cnx2;
 
-    public FXMLController(){
-      cnx2 = MyConnection.getInstance().getCnx();
+    public FXMLController() {
+        cnx2 = MyConnection.getInstance().getCnx();
 
-}
+    }
     @FXML
     private Button btneface, btnupdate;
-      @FXML
+    @FXML
     private TextField searchfield;
 
     @FXML
@@ -83,7 +82,7 @@ public class FXMLController implements Initializable {
         try {
             //Connection cnx2 = MyConnection.getInstance().getCnx();
 
-            String requete = "SELECT * FROM conversation";
+            String requete = "SELECT * FROM conversation order by date_creation DESC";
             PreparedStatement stat = cnx2.prepareStatement(requete);
             ResultSet rs = stat.executeQuery();
             while (rs.next()) {
@@ -91,7 +90,7 @@ public class FXMLController implements Initializable {
 
             }
             //cnx2.close();
-           // rs.close();
+            // rs.close();
 
         } catch (SQLException ex) {
 
@@ -102,7 +101,7 @@ public class FXMLController implements Initializable {
         datecreation.setCellValueFactory(new PropertyValueFactory<>("dateCreation"));
 
         table.setItems(list);
-         /**
+        /**
          * *****************Recherche******************************
          */
         ObservableList data = table.getItems();
@@ -123,14 +122,14 @@ public class FXMLController implements Initializable {
                     }
                 }
             }
-             table.setItems(subentries);
+            table.setItems(subentries);
         });
-        
-             // Create ContextMenu
-          Label label = new Label();
+
+        // Create ContextMenu
+        Label label = new Label();
         ContextMenu contextMenu = new ContextMenu();
- 
-      /*  MenuItem item1 = new MenuItem("reclamer");
+
+        /*  MenuItem item1 = new MenuItem("reclamer");
         item1.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
@@ -163,7 +162,7 @@ public class FXMLController implements Initializable {
         });*/
         MenuItem item2 = new MenuItem("delete");
         item2.setOnAction(new EventHandler<ActionEvent>() {
- 
+
             @Override
             public void handle(ActionEvent event) {
                 try {
@@ -174,42 +173,42 @@ public class FXMLController implements Initializable {
                 }
             }
         });
- 
+
         // Add MenuItem
         contextMenu.getItems().addAll(item2);
- 
+
         // When user right-click 
         table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
- 
+
             @Override
             public void handle(ContextMenuEvent event) {
- 
+
                 contextMenu.show(table, event.getScreenX(), event.getScreenY());
             }
         });
 
     }
-     public void deleteconv(ActionEvent event) throws Exception {
+
+    public void deleteconv(ActionEvent event) throws Exception {
         try {
-            
+
             Conversation conv = (Conversation) table.getSelectionModel().getSelectedItem();
 
-            String requete = "delete FROM conversation where id=?" ;
-           pst = cnx2.prepareStatement(requete);
+            String requete = "delete FROM conversation where id=?";
+            pst = cnx2.prepareStatement(requete);
             pst.setInt(1, conv.getId());
-            
-             Alert alert = new Alert(AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure to delete?");
-                Optional <ButtonType> action = alert.showAndWait();
-                
-                if(action.get() == ButtonType.OK){
-            pst.executeUpdate();
-            
-                }
+
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure to delete?");
+            Optional<ButtonType> action = alert.showAndWait();
+
+            if (action.get() == ButtonType.OK) {
+                pst.executeUpdate();
+
+            }
             //pst.close();
-            
 
         } catch (SQLException e1) {
             System.err.println(e1);

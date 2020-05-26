@@ -5,7 +5,6 @@
  */
 package javafxloginn;
 
-import com.sun.javafx.geom.ConcentricShapePair;
 import entities.Conversation;
 import entities.Message;
 import entities.User;
@@ -126,27 +125,39 @@ public class ConversationController implements Initializable {
     int userloggedid;
     String nomconv = "";
     String sendr = "";
-
+    User logeduser = new User();
     Connection cnx2;
 
     public ConversationController() {
         cnx2 = MyConnection.getInstance().getCnx();
     }
 
-    void setdata(String mail) {
-
-        lblmail.setText(mail);
-        muser = lblmail.getText();
+    /**
+     * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        logeduser = JavaFXloginn.user;
+        lblmail.setText(logeduser.getEmail());
+        muser = logeduser.getEmail();
         userloged = us.findBymail(muser);
         userloggedid = userloged.getId();
-
+        getonlineusers();
+        try {
+            homeBox.setContent(FXMLLoader.load(getClass().getResource("Map2.fxml")));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void getlisteconv() {
 
         owner = us.findBymail(muser);
         i = owner.getId();
-        System.out.println("numero id " + i);
+
         list.addAll(cs.getAllConv(i));
 
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -271,7 +282,7 @@ public class ConversationController implements Initializable {
         tableuser.getItems().clear();
         listu.addAll(us.getAllUsers());
         idu.setCellValueFactory(new PropertyValueFactory<>("id"));
-        name.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        name.setCellValueFactory(new PropertyValueFactory<>("username"));
         origine.setCellValueFactory(new PropertyValueFactory<>("sexe"));
         idu.setVisible(false);
         id.setVisible(false);
@@ -355,9 +366,6 @@ public class ConversationController implements Initializable {
             Stage stage = (Stage) menubar.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("menubar.fxml"));
             Parent parent = loader.load();
-            MenubarController m = loader.getController();
-            m.setMail(muser);
-
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.setTitle("Tunisain Got Talent");
@@ -433,8 +441,6 @@ public class ConversationController implements Initializable {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setTitle("Nouvelle reclamation");
-            Conversation2 cn = loader.getController();
-            cn.setdata(p);
 
             stage.setScene(scene);
             stage.show();
@@ -456,23 +462,6 @@ public class ConversationController implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Create New conversation");
             stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        getonlineusers();
-        try {
-            homeBox.setContent(FXMLLoader.load(getClass().getResource("Map2.fxml")));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -513,6 +502,7 @@ public class ConversationController implements Initializable {
 
                 chatBoxController.setmessage(listm2, x, userloggedid);
                 listm2.clear();
+                //System.out.println("idc "+x+"idu " +userloggedid);
 
                 tabsOpened.put(ConvName, newTab);
                 tabsControllers.put(ConvName, chatBoxController);

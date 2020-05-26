@@ -6,49 +6,24 @@
 package javafxloginn;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
+
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.scene.text.Text;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+
 import entities.Message;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -89,6 +64,7 @@ public class ChatBoxController implements Initializable {
     String img;
     Integer idconv;
     Integer iduser;
+    int v = 1;
     Connection cnx2;
 
     public ChatBoxController() {
@@ -117,8 +93,6 @@ public class ChatBoxController implements Initializable {
         }
     }
 
- 
-
     public void sendmsg() {
         if (!txtFieldMsg.getText().trim().equals("")) {
             Date d = ss.selectDate();
@@ -138,7 +112,7 @@ public class ChatBoxController implements Initializable {
 
     public void addimage(ActionEvent event) throws IOException {
         Date dd = ss.selectDate();
-        String bdy = " send image!! vous le trouver a dossier\n destination du serveur web";
+        String bdy = "send image!! vous le trouver dans le dossier\n destination du serveur web";
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("images", "*.png", "*.jpg"));
         List<File> selctedFiles = fc.showOpenMultipleDialog(null);
@@ -153,7 +127,7 @@ public class ChatBoxController implements Initializable {
                     String extension = img.substring(img.lastIndexOf("."));
                     img = img.substring(img.lastIndexOf("\\") + 1, img.lastIndexOf("."));
                     img = img + u.toString() + extension;
-                    String requete3 = "insert into message (conversation_id,message,image,created_at,user_id) values('" + idconv + "','" + bdy + "','" + img + "','" + dd + "','" + iduser + "')";
+                    String requete3 = "insert into message (conversation_id,message,visible,image,updated_at,user_id) values('" + idconv + "','" + bdy + "','" + v + "','" + img + "','" + dd + "','" + iduser + "')";
                     Statement st3 = cnx2.createStatement();
                     st3.executeUpdate(requete3);
                     File source = new File(old);

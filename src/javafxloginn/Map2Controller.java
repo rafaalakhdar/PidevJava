@@ -24,7 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import services.ListEtablissement;
+import services.AdresseService;
 
 /**
  * FXML Controller class
@@ -75,7 +75,7 @@ public class Map2Controller implements Initializable, MapComponentInitializedLis
 
         map = mapView.createMap(mapOptions);
         
-        ListEtablissement LDS = new ListEtablissement();
+        AdresseService LDS = new AdresseService();
         data = LDS.ListEtab();
                 for (Etablissement etab : data)
          {

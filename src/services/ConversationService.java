@@ -6,7 +6,6 @@
 package services;
 
 import entities.Conversation;
-import entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

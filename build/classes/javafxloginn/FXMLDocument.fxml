@@ -53,7 +53,7 @@
             <Reflection />
          </effect>
       </Text>
-      <Hyperlink fx:id="linkCreateAccount" layoutX="383.0" layoutY="420.0" onAction="#linkCreatAccountAction" prefHeight="29.0" prefWidth="174.0" text="Sign In ..." textAlignment="CENTER" textFill="#564eee">
+      <Hyperlink fx:id="linkCreateAccount" layoutX="383.0" layoutY="420.0" onAction="#linkCreatAccountAction" prefHeight="29.0" prefWidth="174.0" text="Sign Up ..." textAlignment="CENTER" textFill="#564eee">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font></Hyperlink>

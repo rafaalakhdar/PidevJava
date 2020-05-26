@@ -41,7 +41,9 @@ import utilitez.MyConnection;
  * @author Rafaa
  */
 public class EditInfoUserController implements Initializable {
-    
+
+    User logeduser = new User();
+
     @FXML
     private Label lblmail;
 
@@ -58,7 +60,7 @@ public class EditInfoUserController implements Initializable {
     private Button back;
     @FXML
     private Button update;
-        private List<String> liste;
+    private List<String> liste;
 
     public List<String> getListe() {
         return liste;
@@ -67,52 +69,50 @@ public class EditInfoUserController implements Initializable {
     public void setListe(List<String> liste) {
         this.liste = liste;
     }
-      void send(String email) {
-        lblmail.setText(email);
-        txtEmail.setText(lblmail.getText());
-        
-        liste= UserService.getBymail(lblmail.getText());
-        lblmail.setVisible(false);
-        txtUserName.setText(liste.get(0));
-        
-        txtSexe.setText(liste.get(2));
-        txtPays.setText(liste.get(3));
-        txtPassword.setText(liste.get(1));
-        txtPassword.setEditable(false);
-    }
-     
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-       
+        logeduser = JavaFXloginn.user;
+
+        lblmail.setText(logeduser.getEmail());
+        txtEmail.setText(lblmail.getText());
+
+        liste = UserService.getBymail(lblmail.getText());
+        lblmail.setVisible(false);
+        txtUserName.setText(liste.get(0));
+
+        txtSexe.setText(liste.get(2));
+        txtPays.setText(liste.get(3));
+        txtPassword.setText(liste.get(1));
+        txtPassword.setEditable(false);
     }
-    
-    public void updateuser(ActionEvent event){
-         try {
-            
+
+    public void updateuser(ActionEvent event) {
+        try {
+
             PreparedStatement pt = MyConnection.getInstance().getCnx()
-                    .prepareStatement("update user set nom=?,email=? ,sexe=? ,pays=?  where email='"+lblmail.getText()+"' ");
-            
-            pt.setString(1,txtUserName.getText());
-            pt.setString(2,txtEmail.getText());
-            
-            pt.setString(3,txtSexe.getText());
-            pt.setString(4,txtPays.getText());
-            
+                    .prepareStatement("update fos_user set username=?,email=? ,sexe=? ,pays=?,username_canonical=?, email_canonical=?  where email='" + logeduser.getEmail() + "' ");
+
+            pt.setString(1, txtUserName.getText());
+            pt.setString(2, txtEmail.getText());
+
+            pt.setString(3, txtSexe.getText());
+            pt.setString(4, txtPays.getText());
+            pt.setString(5, txtUserName.getText());
+            pt.setString(6, txtEmail.getText());
+
             pt.executeUpdate();
-            btnBackAction(event);
-                      ServiceNotification.showNotif("Success " ,txtUserName.getText() + " Updated !!\nLogin with New Informations");
-                      
-         } catch (SQLException ex) {
+            loginbackAction(event);
+            ServiceNotification.showNotif("Success ", logeduser.getUsername() + " Updated !!\nLogin with New Informations");
+
+        } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
+
     }
-    
-   
 
     /**
      *
@@ -120,6 +120,22 @@ public class EditInfoUserController implements Initializable {
      */
     @FXML
     public void btnBackAction(ActionEvent event) {
+        try {
+
+            Stage stage = new Stage();
+            Parent parent = FXMLLoader.load(getClass().getResource("menubar.fxml"));
+            Scene scene = new Scene(parent);
+            stage.setTitle("Tunisain Got Talent");
+
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void loginbackAction(ActionEvent event) {
         try {
 
             Stage stage = new Stage();
@@ -208,6 +224,4 @@ public class EditInfoUserController implements Initializable {
         return true;
     }
 
-     
-    
 }

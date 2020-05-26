@@ -37,6 +37,8 @@ import services.UserService;
 public class MenubarController implements Initializable {
 
     String profil;
+    User logeduser = new User();
+
     @FXML
     private Label mailfield;
 
@@ -65,17 +67,11 @@ public class MenubarController implements Initializable {
 
         engine = web.getEngine();
         engine.load("http://127.0.0.1:8000");
-        
+        logeduser = JavaFXloginn.user;
+        mailfield.setText(logeduser.getEmail());
 
-    }
-
-    void setMail(String email) {
-
-        mailfield.setText(email);
-        String x = mailfield.getText();
-        System.out.println(x);
         UserService us = new UserService();
-        if (!us.ckecksexe(x).equals("Male")) {
+        if (!us.ckecksexe(logeduser.getEmail()).equals("Male")) {
 
             img2.setVisible(true);
         } else {
@@ -83,24 +79,21 @@ public class MenubarController implements Initializable {
             img.setVisible(true);
             img2.setVisible(false);
         }
+
     }
 
     public void chatpageAction(ActionEvent event) {
-        String p = mailfield.getText();
+
         try {
 
-            //Stage stage = new Stage();
             Stage stage = (Stage) myMenubar.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("conversation.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
-            stage.setTitle("Chat Box " + p);
-            ConversationController cc = loader.getController();
-            cc.setdata(p);
+            stage.setTitle("Chat Box " + logeduser.getEmail());
 
             stage.setScene(scene);
             stage.show();
-            
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -109,18 +102,15 @@ public class MenubarController implements Initializable {
 
     @FXML
     public void updateinfoAction(ActionEvent event) {
-        profil = mailfield.getText();
+
         try {
 
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EditInfoUser.fxml"));
 
             Parent root = loader.load();
-            stage.setTitle("Update Profil user " + profil);
+            stage.setTitle("Update Profil");
             Scene scene = new Scene(root);
-
-            EditInfoUserController iu = loader.getController();
-            iu.send(profil);
 
             stage.setScene(scene);
             stage.show();

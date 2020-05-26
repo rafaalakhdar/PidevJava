@@ -19,9 +19,6 @@ import services.UserService;
  * @author rafaa
  */
 public class UserInfoController implements Initializable {
-   
-     User user;
-  
 
     @FXML
     private Text txtEmail;
@@ -37,26 +34,26 @@ public class UserInfoController implements Initializable {
 
     Integer idu;
 
-     void send(Integer id) {
-         User user = new User();
+    void send(Integer id) {
+        User user = new User();
         idu = id;
         System.out.println(idu);
         UserService us = new UserService();
-        user =  us.findById(idu);
-        txtFullName.setText(user.getNom());
+        user = us.findById(idu);
+        txtFullName.setText(user.getUsername());
         txtEmail.setText(user.getEmail());
-       
+
         txtCountry.setText(user.getPays());
         txtGender.setText(user.getSexe());
-       
-        
+
     }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
-    
+
+    }
+
 }

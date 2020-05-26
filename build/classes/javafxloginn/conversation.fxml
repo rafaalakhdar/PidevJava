@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -11,9 +12,9 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -39,12 +40,15 @@
                         <Image url="@../img/group.png" />
                      </image>
                      <effect>
-                        <SepiaTone level="0.65">
-                           <input>
-                              <DropShadow color="#464444" height="55.21" radius="34.1025" spread="0.85" width="83.2" />
-                           </input>
-                        </SepiaTone>
+                        <Blend>
+                           <topInput>
+                              <DropShadow />
+                           </topInput>
+                        </Blend>
                      </effect>
+                     <cursor>
+                        <Cursor fx:constant="CROSSHAIR" />
+                     </cursor>
                   </ImageView>
                </children>
                <effect>

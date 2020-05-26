@@ -7,7 +7,6 @@ package services;
 
 import entities.Conversation;
 import entities.Message;
-import entities.User;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.Date;
@@ -43,14 +42,15 @@ public class MessageService {
             Integer user = m.getUsermsg();
             Integer conv = m.getCvid();
 
-            String req = "INSERT INTO message (conversation_id,message,created_at,user_id)  VALUES (?,?,?,?)";
+            String req = "INSERT INTO message (conversation_id,message,visible,updated_at,user_id)  VALUES (?,?,?,?,?)";
             PreparedStatement pst = cnx2.prepareStatement(req);
-
-            pst.setString(2, message);
-            pst.setDate(3, new java.sql.Date(creationDate.getTime()));
-
-            pst.setInt(4, user);
             pst.setInt(1, conv);
+            pst.setString(2, message);
+            pst.setInt(3, 1);
+            pst.setDate(4, new java.sql.Date(creationDate.getTime()));
+            
+            pst.setInt(5, user);
+            
             System.out.println(pst.toString());
             pst.executeUpdate();
 
@@ -63,9 +63,8 @@ public class MessageService {
     }
 
     public List<Message> getallmsg(Integer c, Integer u) {
-        //User user = new User();
         List<Message> msgs = new ArrayList<>();
-        String req = "SELECT m.message,m.user_id,m.created_at FROM message m,conversation c, user u,conversation_user cu WHERE u.id=cu.user_id AND cu.conversation_id=c.id and m.conversation_id=c.id and c.id='" + c + "' and u.id='" + u + "'";
+        String req = "SELECT m.message,m.user_id,m.updated_at FROM message m,conversation c, fos_user u,conversation_user cu WHERE u.id=cu.user_id AND cu.conversation_id=c.id and m.conversation_id=c.id and c.id='" + c + "' and u.id='" + u + "'";
         PreparedStatement preparedStatement;
         try {
             preparedStatement = cnx2.prepareStatement(req);
@@ -76,7 +75,7 @@ public class MessageService {
                 m = new Message(
                         resultSet.getString("message"),
                         resultSet.getInt("user_id"),
-                        resultSet.getDate("created_at")
+                        resultSet.getDate("updated_at")
                 );
                 msgs.add(m);
 

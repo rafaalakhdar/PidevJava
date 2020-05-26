@@ -8,19 +8,23 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFXloginn.jar" size="3716131" download="eager" />
+    <jar href="JavaFXloginn.jar" size="3716878" download="eager" />
     <jar href="lib\GMapsFX-2.12.0.jar" size="207618" download="eager" />
     <jar href="lib\TrayNotification.jar" size="41019" download="eager" />
     <jar href="lib\client-4.0.1.jar" size="305386" download="eager" />
+    <jar href="lib\com.fasterxml.jackson.databind.jar" size="920971" download="eager" />
     <jar href="lib\controlsfx-8.40.14.jar" size="1215643" download="eager" />
     <jar href="lib\controlsfx-samples-8.40.14.jar" size="725707" download="eager" />
     <jar href="lib\eclipselink.jar" size="8478776" download="eager" />
     <jar href="lib\hamcrest-core-1.1.jar" size="76643" download="eager" />
     <jar href="lib\httpclient-4.5.3.jar" size="747794" download="eager" />
     <jar href="lib\jGoogleMaps.jar" size="178128" download="eager" />
+    <jar href="lib\jackson-annotations-2.0.1.jar" size="33377" download="eager" />
+    <jar href="lib\jackson-core-2.9.8.jar" size="325619" download="eager" />
     <jar href="lib\javafx-ui-controls.jar" size="1201545" download="eager" />
     <jar href="lib\javax.mail.jar" size="654100" download="eager" />
     <jar href="lib\javax.persistence_2.1.0.v201304241213.jar" size="164637" download="eager" />
+    <jar href="lib\jbcrypt-0.3m.jar" size="17750" download="eager" />
     <jar href="lib\jfoenix-8.0.1.jar" size="2405715" download="eager" />
     <jar href="lib\json-simple-1.1.1.jar" size="23931" download="eager" />
     <jar href="lib\junit-4.10.jar" size="253160" download="eager" />

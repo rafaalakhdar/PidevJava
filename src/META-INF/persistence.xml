@@ -3,7 +3,6 @@
   <persistence-unit name="JavaFXloginnPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entities.Conversation</class>
-    <class>entities.User</class>
     <class>entities.Message</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test?zeroDateTimeBehavior=convertToNull"/>

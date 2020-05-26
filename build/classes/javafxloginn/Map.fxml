@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import com.lynden.gmapsfx.GoogleMapView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -14,20 +13,19 @@
       <GoogleMapView fx:id="googleMapView" layoutX="14.0" layoutY="85.0" prefHeight="485.0" prefWidth="680.0" />
       <AnchorPane fx:id="searchAP" layoutX="14.0" layoutY="19.0" prefHeight="47.0" prefWidth="680.0" style="-fx-background-color: D8D8D8;">
          <children>
-            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="248.0" layoutY="12.0" prefHeight="25.0" prefWidth="59.0" text="Latitude :">
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="27.0" layoutY="12.0" prefHeight="25.0" prefWidth="59.0" text="Latitude :">
                <font>
                   <Font name="Comic Sans MS Bold" size="12.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="address" labelFloat="true" layoutX="14.0" layoutY="12.0" prefHeight="25.0" prefWidth="196.0" promptText="Votre Nom.." />
-            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="432.0" layoutY="15.0" text="Longitude :">
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="260.0" layoutY="15.0" text="Longitude :">
                <font>
                   <Font name="Comic Sans MS Bold" size="12.0" />
                </font>
             </Label>
-            <JFXButton fx:id="save" buttonType="RAISED" layoutX="587.0" layoutY="11.0" onAction="#addposition" style="-fx-background-color: ff214f; -fx-text-fill: white;" text="Enregistrer" />
-            <TextField fx:id="latitudeLabel" layoutX="307.0" layoutY="9.0" prefHeight="31.0" prefWidth="120.0" />
-            <TextField fx:id="longitudeLabel" layoutX="489.0" layoutY="9.0" prefHeight="31.0" prefWidth="92.0" />
+            <JFXButton fx:id="save" buttonType="RAISED" layoutX="522.0" layoutY="8.0" onAction="#addposition" style="-fx-background-color: ff214f; -fx-text-fill: white;" text="Enregistrer" />
+            <TextField fx:id="latitudeLabel" layoutX="95.0" layoutY="9.0" prefHeight="31.0" prefWidth="120.0" />
+            <TextField fx:id="longitudeLabel" layoutX="338.0" layoutY="9.0" prefHeight="31.0" prefWidth="92.0" />
          </children>
          <effect>
             <Reflection />

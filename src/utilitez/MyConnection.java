@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class MyConnection {
 
-    String url = "jdbc:mysql://localhost:3306/test";
+    String url = "jdbc:mysql://localhost:3306/pid";
     String login = "root";
     String mdp = "";
     Connection cnx;

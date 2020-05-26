@@ -18,15 +18,15 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
-      <ComboBox fx:id="comboboxGender" editable="true" layoutX="23.0" layoutY="304.0" prefHeight="27.0" prefWidth="132.0" />
-      <ComboBox fx:id="comboboxCountry" editable="true" layoutX="180.0" layoutY="304.0" prefHeight="27.0" prefWidth="132.0" />
+      <ComboBox fx:id="comboboxGender" editable="true" layoutX="23.0" layoutY="317.0" prefHeight="27.0" prefWidth="132.0" />
+      <ComboBox fx:id="comboboxCountry" editable="true" layoutX="180.0" layoutY="317.0" prefHeight="27.0" prefWidth="132.0" />
       <TextField fx:id="txtEmail" layoutX="22.0" layoutY="160.0" prefHeight="31.0" prefWidth="363.0" promptText="exemple@exemple.exemple" />
-      <PasswordField fx:id="txtPassword" layoutX="23.0" layoutY="210.0" prefHeight="31.0" prefWidth="363.0" promptText="Password" />
-      <Button fx:id="btnSignup" layoutX="123.0" layoutY="378.0" mnemonicParsing="false" onAction="#ajouteruser" prefHeight="27.0" prefWidth="173.0" text="Sauvgarder" />
-      <Separator layoutX="105.0" layoutY="261.0" prefWidth="200.0" />
+      <PasswordField fx:id="txtPassword" layoutX="23.0" layoutY="216.0" prefHeight="31.0" prefWidth="363.0" promptText="Password" />
+      <Button fx:id="btnSignup" layoutX="123.0" layoutY="404.0" mnemonicParsing="false" onAction="#ajouteruser" prefHeight="27.0" prefWidth="173.0" text="Save" />
+      <Separator layoutX="105.0" layoutY="267.0" prefWidth="200.0" />
       <TextField fx:id="txtUserName" layoutX="23.0" layoutY="104.0" prefHeight="31.0" prefWidth="363.0" promptText="Username" />
-      <Text fill="#ee3f13" layoutX="29.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sexe" textAlignment="CENTER" wrappingWidth="82.5419921875" />
-      <Text fill="#e1491f" layoutX="178.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pays" textAlignment="CENTER" wrappingWidth="94.65576171875" />
+      <Text fill="#ee3f13" layoutX="29.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sexe" textAlignment="CENTER" wrappingWidth="82.5419921875" />
+      <Text fill="#e1491f" layoutX="180.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country" textAlignment="CENTER" wrappingWidth="94.65576171875" />
       <Button fx:id="back" layoutX="37.0" layoutY="26.0" mnemonicParsing="false" onAction="#btnBackAction">
       <graphic>
         <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
@@ -36,7 +36,6 @@
         </ImageView>
             </graphic>
             </Button>
-      <Button fx:id="fcbSignIn" layoutX="106.0" layoutY="440.0" mnemonicParsing="false" onAction="#signInFb" prefHeight="30.0" prefWidth="214.0" text="Sign in with Facebook" />
       <Button fx:id="gomap" layoutX="332.0" layoutY="302.0" mnemonicParsing="false" onAction="#mapadresseAction" prefHeight="35.0" prefWidth="42.0">
          <graphic>
             <ImageView fitHeight="85.0" fitWidth="45.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">

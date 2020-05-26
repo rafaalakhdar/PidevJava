@@ -5,24 +5,21 @@
  */
 package javafxloginn;
 
-import entities.Conversation;
-import entities.Message;
 import entities.User;
-import java.util.Calendar;
-import java.util.Date;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import services.MessageService;
-import utilitez.MyConnection;
 
 /**
  *
  * @author Rafaa
  */
 public class JavaFXloginn extends Application {
+
+    public static User user = null;
 
     @Override
     public void start(Stage stage) throws Exception {

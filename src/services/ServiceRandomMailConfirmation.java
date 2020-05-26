@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  *
- * @author mahmo
+ * @author Rafaa
  */
 public class ServiceRandomMailConfirmation {
     private static final String CHAR_LIST = 

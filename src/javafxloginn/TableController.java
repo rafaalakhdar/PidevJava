@@ -89,11 +89,11 @@ public class TableController implements Initializable {
 
         try {
 
-            String requete = "SELECT * FROM user";
+            String requete = "SELECT * FROM fos_user";
             PreparedStatement stat = cnx2.prepareStatement(requete);
             ResultSet rs = stat.executeQuery();
             while (rs.next()) {
-                list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
+                list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(8), rs.getString(13), rs.getString(14), rs.getString(15)));
 
             }
 
@@ -102,7 +102,7 @@ public class TableController implements Initializable {
             System.out.println(ex.getMessage());
         }
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        nom.setCellValueFactory(new PropertyValueFactory<>("username"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         password.setCellValueFactory(new PropertyValueFactory<>("password"));
         sexe.setCellValueFactory(new PropertyValueFactory<>("sexe"));
@@ -216,7 +216,7 @@ public class TableController implements Initializable {
 
             User user = (User) table.getSelectionModel().getSelectedItem();
 
-            String requete = "delete FROM user where id=?";
+            String requete = "delete FROM fos_user where id=?";
             pst = cnx2.prepareStatement(requete);
             pst.setInt(1, user.getId());
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -247,11 +247,11 @@ public class TableController implements Initializable {
 
         try {
 
-            String requete = "SELECT * FROM user";
+            String requete = "SELECT * FROM fos_user";
             PreparedStatement stat = cnx2.prepareStatement(requete);
             ResultSet rs = stat.executeQuery();
             while (rs.next()) {
-                list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
+                list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(8), rs.getString(13), rs.getString(14), rs.getString(15)));
 
             }
 
@@ -261,7 +261,7 @@ public class TableController implements Initializable {
         }
         table.getItems().clear();
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        nom.setCellValueFactory(new PropertyValueFactory<>("username"));
         email.setCellValueFactory(new PropertyValueFactory<>("email"));
         password.setCellValueFactory(new PropertyValueFactory<>("password"));
         sexe.setCellValueFactory(new PropertyValueFactory<>("sexe"));

@@ -5,7 +5,6 @@
  */
 package javafxloginn;
 
-import entities.Conversation;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +40,6 @@ import services.ConversationService;
 import services.ServiceNotification;
 import services.UserService;
 import utilitez.MyConnection;
-import utilitez.SHA;
 import utilitez.ServiceSysdate;
 
 /**
@@ -52,6 +50,8 @@ import utilitez.ServiceSysdate;
 public class GroupSceneController implements Initializable {
 
     ServiceSysdate ss = new ServiceSysdate();
+    User logeduser = new User();
+
     @FXML
     private TextField txtFieldGroupName;
     @FXML
@@ -84,12 +84,17 @@ public class GroupSceneController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ArrayList<User> friendsList = (ArrayList<User>) us.getAllUsers();
         ArrayList<String> contactsName = new ArrayList<>();
+        logeduser = JavaFXloginn.user;
 
         if (friendsList != null) {
             for (User contact : friendsList) {
-                contactsName.add(contact.getNom());
+                contactsName.add(contact.getUsername());
+                if (logeduser.getUsername().equals(contact.getUsername())) {
+                    contactsName.remove(logeduser.getUsername());
 
+                }
             }
+
         }
         //set it within the last if .. this just for test
         ObservableList<String> data = FXCollections.observableArrayList(contactsName);
@@ -137,7 +142,7 @@ public class GroupSceneController implements Initializable {
             Alert alertSuccess = new Alert(Alert.AlertType.INFORMATION);
             alertSuccess.setTitle("Successfully");
             alertSuccess.setHeaderText("Updated with Sucsess ");
-            alertSuccess.setContentText("Welcome to chhat");
+            alertSuccess.setContentText("Welcome to chat");
             alertSuccess.showAndWait();
 
             idconv = cs.searchBynom(groupName);
@@ -150,13 +155,29 @@ public class GroupSceneController implements Initializable {
                 st2.executeUpdate(requete2);
             }
             String requete3 = "insert into conversation_user (conversation_id,user_id) values('" + idconv + "','" + i + "')";
-                Statement st3 = cnx2.createStatement();
-                st3.executeUpdate(requete3);
-                ((Node) (event.getSource())).getScene().getWindow().hide();
+            Statement st3 = cnx2.createStatement();
+            st3.executeUpdate(requete3);
+            ((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (SQLException ex) {
             Logger.getLogger(GroupSceneController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+  @FXML
+    private void backAction(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            Parent parent = FXMLLoader.load(getClass().getResource("conversation.fxml"));
+            Scene scene = new Scene(parent);
 
+            stage.setScene(scene);
+            stage.setTitle("Tunisain Got Talent");
+            stage.show();
+
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

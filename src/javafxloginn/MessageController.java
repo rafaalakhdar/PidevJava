@@ -5,9 +5,7 @@
  */
 package javafxloginn;
 
-import entities.Conversation;
 import entities.Message;
-import entities.User;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +16,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,9 +43,10 @@ import utilitez.MyConnection;
  * @author Rafaa
  */
 public class MessageController implements Initializable {
-      @FXML
+
+    @FXML
     private TextField searchfield;
-     @FXML
+    @FXML
     private TableView<Message> table;
     @FXML
     private TableColumn<Message, Integer> id;
@@ -59,38 +57,32 @@ public class MessageController implements Initializable {
     @FXML
     private TableColumn<Message, Date> date;
 
-   
-
     PreparedStatement pst = null;
     ResultSet rs = null;
     Connection cnx2;
 
-    public MessageController(){
-      cnx2 = MyConnection.getInstance().getCnx();
+    public MessageController() {
+        cnx2 = MyConnection.getInstance().getCnx();
 
-}
+    }
 
     public ObservableList<Message> list = FXCollections.observableArrayList();
-    
-    
-     @FXML
+
+    @FXML
     public void listeMessage() {
 
         try {
-           
 
-            String requete = "SELECT * FROM message";
+            String requete = "SELECT * FROM message order by updated_at DESC ";
             PreparedStatement stat = cnx2.prepareStatement(requete);
             ResultSet rs = stat.executeQuery();
             while (rs.next()) {
                 list.add(new Message(rs.getInt(2), rs.getString(3),
-                        rs.getString(4),
-                        rs.getDate(5)
-                  
+                        rs.getString(5),
+                        rs.getDate(6)
                 ));
 
             }
-     
 
         } catch (SQLException ex) {
 
@@ -101,11 +93,9 @@ public class MessageController implements Initializable {
         message.setCellValueFactory(new PropertyValueFactory<>("message"));
         image.setCellValueFactory(new PropertyValueFactory<>("image"));
         date.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
-  
-     
 
         table.setItems(list);
-         /**
+        /**
          * *****************Recherche******************************
          */
         ObservableList data = table.getItems();
@@ -126,15 +116,15 @@ public class MessageController implements Initializable {
                     }
                 }
             }
-             table.setItems(subentries);
+            table.setItems(subentries);
         });
-         // Create ContextMenu
-          Label label = new Label();
+        // Create ContextMenu
+        Label label = new Label();
         ContextMenu contextMenu = new ContextMenu();
- 
+
         MenuItem item1 = new MenuItem("reclamer");
         item1.setOnAction(new EventHandler<ActionEvent>() {
- 
+
             @Override
             public void handle(ActionEvent event) {
                 label.setText("Select Menu Item 1");
@@ -142,7 +132,7 @@ public class MessageController implements Initializable {
         });
         MenuItem item2 = new MenuItem("delete");
         item2.setOnAction(new EventHandler<ActionEvent>() {
- 
+
             @Override
             public void handle(ActionEvent event) {
                 try {
@@ -153,40 +143,38 @@ public class MessageController implements Initializable {
                 }
             }
         });
- 
+
         // Add MenuItem 
         contextMenu.getItems().addAll(item1, item2);
- 
+
         // When user right-click 
         table.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
- 
+
             @Override
             public void handle(ContextMenuEvent event) {
- 
+
                 contextMenu.show(table, event.getScreenX(), event.getScreenY());
             }
         });
     }
-    
-    
-    
-      public void deletemsg(ActionEvent event) throws Exception {
+
+    public void deletemsg(ActionEvent event) throws Exception {
         try {
-          
+
             Message msg = (Message) table.getSelectionModel().getSelectedItem();
 
             String requete = "delete FROM message where idM=?";
             pst = cnx2.prepareStatement(requete);
             pst.setInt(1, msg.getIdM());
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure to delete?");
-                Optional <ButtonType> action = alert.showAndWait();
-                
-                if(action.get() == ButtonType.OK){
-            pst.executeUpdate();
-                }
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure to delete?");
+            Optional<ButtonType> action = alert.showAndWait();
+
+            if (action.get() == ButtonType.OK) {
+                pst.executeUpdate();
+            }
             pst.close();
 
         } catch (SQLException e1) {
@@ -201,19 +189,14 @@ public class MessageController implements Initializable {
         listeMessage();
 
     }
-    
-    
-    
-    
-    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-               listeMessage();
+        listeMessage();
 
-    }    
-    
+    }
+
 }
