@@ -158,10 +158,10 @@ public class ChangerpassController implements Initializable {
             }
 
         } else {
-            TrayNotification tray = new TrayNotification("Oups", "Vérififiez vos paramétre", ERROR);
+            TrayNotification tray = new TrayNotification("Oups", "Mot de passes doit etre conforme", ERROR);
             tray.setAnimationType(AnimationType.POPUP);
             tray.showAndDismiss(Duration.seconds(3));
-            System.out.println("Oups Vérififiez vos paramétre");
+            System.out.println("Oups doit etre meme passe");
         }
     }
 

@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFXloginn.jar" size="3716878" download="eager" />
+    <jar href="JavaFXloginn.jar" size="3716890" download="eager" />
     <jar href="lib\GMapsFX-2.12.0.jar" size="207618" download="eager" />
     <jar href="lib\TrayNotification.jar" size="41019" download="eager" />
     <jar href="lib\client-4.0.1.jar" size="305386" download="eager" />
