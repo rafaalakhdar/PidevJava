@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.MenubarController">
+    <top>
+        <MenuBar fx:id="myMenubar" prefHeight="34.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Acceuil">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#btn4" text="Home" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Audition">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#test" text="Ajouter votre Audition" />
+               </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Show">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="evenement" />
+               </items>
+                </Menu>
+            <Menu mnemonicParsing="false" text="Publication">
+              <items>
+                <MenuItem mnemonicParsing="false" text="commentaire" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Conversation">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#chatpageAction" text="Chat Box" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Shop">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Reclamation" />
+              </items>
+            </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <left>
+        <VBox prefHeight="655.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+    </left>
+    <center>
+        <WebView fx:id="web" prefHeight="660.0" prefWidth="1189.0" BorderPane.alignment="CENTER" />
+    </center>
+    <bottom>
+        <HBox BorderPane.alignment="CENTER">
+            <children>
+                <Button mnemonicParsing="false" onAction="#btn1" prefHeight="35.0" prefWidth="63.0">
+                    <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/img/facebook.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btn2" prefHeight="35.0" prefWidth="62.0">
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/img/youtube.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btn3" prefHeight="35.0" prefWidth="59.0">
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/img/gmail.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btn5" prefHeight="35.0" prefWidth="62.0">
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/img/reload.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btn4" prefHeight="35.0" prefWidth="304.0" text="TunisainGotTalent">
+                     <graphic>
+                        <ImageView fitHeight="35.0" fitWidth="20.0" layoutX="369.0" layoutY="119.0" opacity="0.8" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/img/global.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+            <effect>
+                <Blend />
+            </effect>
+        </HBox>
+    </bottom>
+   <right>
+      <Pane prefHeight="648.0" prefWidth="172.0" BorderPane.alignment="CENTER">
+         <children>
+   <ImageView fx:id="img2" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true" >
+                    <image>
+                        <Image url="@/img/female.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="img" fitHeight="150.0" fitWidth="200.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/img/user.png" />
+                    </image>
+                </ImageView>
+            <Button fx:id="updateinfo" layoutX="27.0" layoutY="183.0" mnemonicParsing="false" onAction="#updateinfoAction" text="Update Profil" />
+            <Label fx:id="mailfield" layoutX="10.0" layoutY="151.0" prefHeight="29.0" prefWidth="172.0" />
+         </children>
+      </Pane>
+   </right>
+</BorderPane>

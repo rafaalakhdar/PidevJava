@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="null.jnlp">
+  <information>
+    <title>null</title>
+    <vendor>null</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="JavaFXloginn.jar" size="3672350" download="eager" />
+    <jar href="lib\Bulk_SMS_Library.jar" size="3292" download="eager" />
+    <jar href="lib\GMapsFX-2.10.0.jar" size="154471" download="eager" />
+    <jar href="lib\TrayNotification.jar" size="41019" download="eager" />
+    <jar href="lib\client-4.0.1.jar" size="305386" download="eager" />
+    <jar href="lib\com.fasterxml.jackson.databind.jar" size="920971" download="eager" />
+    <jar href="lib\commons-codec-1.9.jar" size="263965" download="eager" />
+    <jar href="lib\commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="lib\controlsfx-8.40.14.jar" size="1215643" download="eager" />
+    <jar href="lib\eclipselink.jar" size="8478776" download="eager" />
+    <jar href="lib\fontawesomefx-commons-9.1.2.jar" size="24064" download="eager" />
+    <jar href="lib\fontawesomefx-fontawesome-4.7.0-9.1.2.jar" size="137226" download="eager" />
+    <jar href="lib\hamcrest-core-1.1.jar" size="76643" download="eager" />
+    <jar href="lib\httpasyncclient-4.1.1.jar" size="177013" download="eager" />
+    <jar href="lib\httpclient-4.5.2.jar" size="736658" download="eager" />
+    <jar href="lib\httpclient-4.5.3.jar" size="747794" download="eager" />
+    <jar href="lib\httpcore-4.4.4.jar" size="326724" download="eager" />
+    <jar href="lib\httpcore-nio-4.4.4.jar" size="356091" download="eager" />
+    <jar href="lib\httpmime-4.5.2.jar" size="41029" download="eager" />
+    <jar href="lib\jackson-annotations-2.8.0.jar" size="55784" download="eager" />
+    <jar href="lib\jackson-core-2.8.8.jar" size="282438" download="eager" />
+    <jar href="lib\jackson-databind-2.8.8.jar" size="1238590" download="eager" />
+    <jar href="lib\javafx-ui-controls.jar" size="1201545" download="eager" />
+    <jar href="lib\javax.mail-api-1.4.7.jar" size="189526" download="eager" />
+    <jar href="lib\javax.persistence_2.1.0.v201304241213.jar" size="164637" download="eager" />
+    <jar href="lib\jbcrypt-0.4.jar" size="17429" download="eager" />
+    <jar href="lib\jfoenix-8.0.1.jar" size="2405714" download="eager" />
+    <jar href="lib\json-20160212.jar" size="49176" download="eager" />
+    <jar href="lib\json-simple-1.1.jar" size="16046" download="eager" />
+    <jar href="lib\junit-4.13.jar" size="381765" download="eager" />
+    <jar href="lib\lombok-1.16.16.jar" size="1439298" download="eager" />
+    <jar href="lib\mysql-connector-java-5.1.23-bin.jar" size="834126" download="eager" />
+    <jar href="lib\notification-bulksms-1.2.4.jar" size="8912" download="eager" />
+    <jar href="lib\notification-sms-1.2.4.jar" size="6434" download="eager" />
+    <jar href="lib\org.eclipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar" size="1366247" download="eager" />
+    <jar href="lib\restfb-1.18.0.jar" size="264745" download="eager" />
+    <jar href="lib\selenium-java.jar" size="5045777" download="eager" />
+    <jar href="lib\selenium-server-3.11.0.jar" size="589215" download="eager" />
+    <jar href="lib\slf4j-api-1.7.25.jar" size="41203" download="eager" />
+    <jar href="lib\unirest-java-1.4.9.jar" size="44604" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="null" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="javafxloginn.JavaFXloginn"  name="null" />
+  <update check="always"/>
+</jnlp>

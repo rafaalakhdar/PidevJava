@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Implementation-Title: JavaFXloginn
+X-COMMENT: Main-Class will be added automatically by build
+Implementation-Version: 1.0
+Permissions: sandbox
+Codebase: *
+JavaFX-Version: 8.0
+Class-Path: lib/Bulk_SMS_Library.jar lib/GMapsFX-2.10.0.jar lib/TrayNo
+ tification.jar lib/client-4.0.1.jar lib/commons-codec-1.9.jar lib/com
+ mons-logging-1.2.jar lib/controlsfx-8.40.14.jar lib/eclipselink.jar l
+ ib/httpasyncclient-4.1.1.jar lib/httpclient-4.5.2.jar lib/httpclient-
+ 4.5.3.jar lib/httpcore-4.4.4.jar lib/httpcore-nio-4.4.4.jar lib/httpm
+ ime-4.5.2.jar lib/jackson-annotations-2.8.0.jar lib/jackson-core-2.8.
+ 8.jar lib/jackson-databind-2.8.8.jar lib/javafx-ui-controls.jar lib/j
+ avax.mail-api-1.4.7.jar lib/javax.persistence_2.1.0.v201304241213.jar
+  lib/jfoenix-8.0.1.jar lib/json-20160212.jar lib/json-simple-1.1.jar 
+ lib/lombok-1.16.16.jar lib/mysql-connector-java-5.1.23-bin.jar lib/no
+ tification-bulksms-1.2.4.jar lib/notification-sms-1.2.4.jar lib/org.e
+ clipse.persistence.jpa.jpql_2.5.2.v20140319-9ad6abd.jar lib/restfb-1.
+ 18.0.jar lib/selenium-java.jar lib/selenium-server-3.11.0.jar lib/slf
+ 4j-api-1.7.25.jar lib/unirest-java-1.4.9.jar
+Created-By: JavaFX Packager
+Implementation-Vendor: Rafaa
+Main-Class: javafxloginn.JavaFXloginn
+

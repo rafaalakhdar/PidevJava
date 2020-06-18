@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.TGTContoller">
+    <right>
+        <ScrollBar orientation="VERTICAL" BorderPane.alignment="CENTER" />
+    </right>
+    <padding>
+        <Insets top="2.0" />
+    </padding>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Acceuil">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#logout" text="logout" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab text="Users">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <fx:include fx:id="includeID1" source="Table.fxml" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            <Tab text="Conversations">
+              <content>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <fx:include fx:id="includeID2" source="FXML.fxml" />
+                            </children>
+                        </AnchorPane>
+              </content>
+            </Tab>
+                <Tab text="Messages">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="642.0" prefWidth="615.0">
+                            <children>
+                                <fx:include fx:id="includeID3" source="Message.fxml" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <left>
+        <TreeView fx:id="mytree" editable="true" onContextMenuRequested="#choixtree" onMouseClicked="#choixtree" prefHeight="681.0" prefWidth="295.0" BorderPane.alignment="CENTER" />
+    </left>
+</BorderPane>

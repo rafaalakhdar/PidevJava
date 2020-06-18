@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="1046.0" stylesheets="@grey_theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxloginn.MessageController">
+   <children>
+      <TableView fx:id="table" layoutY="-2.0" prefHeight="397.0" prefWidth="1046.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="87.0" text="ID" />
+          <TableColumn fx:id="message" minWidth="0.0" prefWidth="254.0" text="Message" />
+            <TableColumn fx:id="image" minWidth="0.0" prefWidth="231.0" text="Image" />
+            <TableColumn fx:id="date" minWidth="0.0" prefWidth="146.0" text="Date" />
+            <TableColumn fx:id="idconv" minWidth="0.0" prefWidth="137.0" text="Conversation" />
+            <TableColumn fx:id="iduser" minWidth="0.0" prefWidth="145.0" text="user" />
+        </columns>
+      </TableView>
+      <TextField fx:id="searchfield" layoutX="391.0" layoutY="411.0" prefHeight="38.0" prefWidth="246.0" promptText="Rechercher ..." />
+      <Line endX="152.0" layoutX="188.0" layoutY="430.0" startX="-100.0" />
+      <Line endX="152.0" layoutX="785.0" layoutY="429.0" startX="-100.0" />
+   </children>
+</AnchorPane>
